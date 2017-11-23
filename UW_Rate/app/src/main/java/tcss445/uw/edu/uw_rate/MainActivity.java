@@ -17,7 +17,8 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         LoginFragment.LoginFragmentInteractionListener,
-        RegisterFragment.RegisterFragmentInteractionListener {
+        RegisterFragment.RegisterFragmentInteractionListener,
+        SearchFragment.SearchFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +110,23 @@ public class MainActivity extends AppCompatActivity
                 switchFrag(frag, theFragString);
                 break;
             case "SearchFrag":
-                //switchFrag(new SearchFrag(), theFragString);
+                switchFrag(new SearchFragment(), theFragString);
                 break;
         }
+    }
+
+    @Override
+    public void registerFragmentInteraction(String theFragString) {
+        switch (theFragString) {
+            case "SearchFrag":
+                switchFrag(new SearchFragment(), theFragString);
+                break;
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(String theFragString) {
+
     }
 
     private void switchFrag(Fragment theFrag, String theFragString) {
@@ -119,10 +134,5 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.main_container, theFrag, theFragString)
                 .addToBackStack(theFragString);
         transaction.commit();
-    }
-
-    @Override
-    public void registerFragmentInteraction(String theFragString) {
-
     }
 }

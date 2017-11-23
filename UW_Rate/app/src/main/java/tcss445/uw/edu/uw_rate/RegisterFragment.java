@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -52,6 +53,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         } else {
             mAdminRadio.setChecked(true);
         }
+
+        Button register = (Button) v.findViewById(R.id.registerButton);
+        register.setOnClickListener(this);
         
         return v;
     }
@@ -75,8 +79,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.createButton) {
-
+        if (view.getId() == R.id.registerButton) {
+            mListener.registerFragmentInteraction("SearchFrag");
         }
     }
 
