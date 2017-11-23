@@ -17,6 +17,6 @@
     <string name="gender_string">Gender</string>
     <string name="register_string">Register</string>
     <string name="boo_key">boo key</string>
-
+    <string name="search_professor_string">Search Professor</string>
 
 </resources>
