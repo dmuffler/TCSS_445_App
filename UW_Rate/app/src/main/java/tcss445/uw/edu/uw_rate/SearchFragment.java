@@ -7,6 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -15,9 +23,10 @@ import android.view.ViewGroup;
  * {@link SearchFragment.SearchFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     private SearchFragmentInteractionListener mListener;
+    private ProfessorListAdapter mListAdapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -28,7 +37,28 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        mListAdapter = new ProfessorListAdapter(getContext());
+        ListView professorListView = (ListView) view.findViewById(R.id.professorListView);
+        professorListView.setAdapter(mListAdapter);
+        professorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
+
+        List<Professor> professors = new ArrayList<Professor>();
+        Professor testProfessor = new Professor("Test Professor");
+        Professor professor = new Professor("Prof. Smith");
+        professors.add(testProfessor);
+        professors.add(professor);
+        mListAdapter.setProfessors(professors);
+
+        SearchView mSearchView = (SearchView) view.findViewById(R.id.searchField);
+        mSearchView.setOnQueryTextListener(this);
+        return view;
     }
 
     @Override
@@ -48,6 +78,15 @@ public class SearchFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String s) { return false; }
+
+    @Override
+    public boolean onQueryTextChange(String queryText) {
+        mListAdapter.getFilter().filter(queryText);
+        return false;
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -61,5 +100,6 @@ public class SearchFragment extends Fragment {
     public interface SearchFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String theFragString);
+        void onProfessorSelected(Professor professor);
     }
 }

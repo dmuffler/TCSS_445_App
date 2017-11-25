@@ -2,6 +2,8 @@ package tcss445.uw.edu.uw_rate;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,6 +36,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
@@ -100,4 +103,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public interface LoginFragmentInteractionListener {
         void loginFragmentInteraction(String theFragString, int theRadioCheck);
     }
+
+
+
 }
