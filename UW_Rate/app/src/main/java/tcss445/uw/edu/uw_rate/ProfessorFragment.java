@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -28,9 +29,15 @@ public class ProfessorFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_professor, container, false);
+
         professorName = getArguments().getString("professor");
-        //Log.d("passed", professorName);
-        return inflater.inflate(R.layout.fragment_professor, container, false);
+
+        final TextView professorNameLabel = (TextView) view.findViewById(R.id.professorName);
+        professorNameLabel.setText(professorName);
+
+        //return inflater.inflate(R.layout.fragment_professor, container, false);
+        return view;
     }
 
     @Override
