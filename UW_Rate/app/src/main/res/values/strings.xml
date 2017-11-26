@@ -18,5 +18,8 @@
     <string name="register_string">Register</string>
     <string name="boo_key">boo key</string>
     <string name="search_professor_string">Search Professor</string>
+    <string name="review_here">Your Review Here</string>
+    <string name="your_review">Your Review</string>
+    <string name="submit_review">Submit Review</string>
 
 </resources>

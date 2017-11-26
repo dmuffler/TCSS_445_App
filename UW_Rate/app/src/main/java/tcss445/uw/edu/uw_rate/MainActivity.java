@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         LoginFragment.LoginFragmentInteractionListener,
         RegisterFragment.RegisterFragmentInteractionListener,
-        SearchFragment.SearchFragmentInteractionListener {
+        SearchFragment.SearchFragmentInteractionListener,
+        ProfessorFragment.ProfessorFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,8 +136,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onProfessorSelected(Professor professor) {
-
+    public void onProfessorSelected(Professor professor, String theFragString) {
+        Bundle bundle = new Bundle();
+        bundle.putString("professor", professor.getName());
+        Fragment frag = new ProfessorFragment();
+        frag.setArguments(bundle);
+        switchFrag(frag, theFragString);
     }
 
     private void switchFrag(Fragment theFrag, String theFragString) {
@@ -144,5 +149,10 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.main_container, theFrag, theFragString)
                 .addToBackStack(theFragString);
         transaction.commit();
+    }
+
+    @Override
+    public void professorFragmentInteraction(String theFragString, int theRadioCheck) {
+        Log.d("professor", "inside professorfragmentinteraction");
     }
 }
