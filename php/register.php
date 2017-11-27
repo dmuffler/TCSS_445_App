@@ -7,7 +7,7 @@ $dsn = 'mysql:host=localhost;dbname=dmuffler';
 $username = 'dmuffler';
 $password = 'Dawckyun';
 
-// 1 if a student, else an admin.
+// 0 if a student, else an admin.
 $control = $_GET['my_control'];
 
 $email = $_GET['my_email'];
@@ -22,7 +22,7 @@ try {
     #make a new DB object to interact with
     $db = new PDO($dsn, $username, $password);
     // user register
-    if ($control == 1) {
+    if ($control == 0) {
         #build a SQL statement to query the DB
         $account_check = "SELECT email FROM Student WHERE email = '$email'";
     // admin register
@@ -42,14 +42,14 @@ try {
         print "false";
     } else {
         // user does not exist
-        print "true";
-        
-        if ($control == 1) {
+        if ($control == 0) {
             $account_add = "INSERT INTO Student VALUES ('$email', '$pass', '$first_name', '$last_name', '$gender')";
         } else {
             $account_add = "INSERT INTO Admin VALUES ('$email', '$pass', '$first_name', '$last_name')";
         }
         $db->query($account_add);
+        
+        print true;
     }
    // echo json_encode($result);
     $db = null;
