@@ -1,3 +1,5 @@
+<?php
+
 // connect to the Database
 $dsn = 'mysql:host=localhost;dbname=dmuffler';
 $username = 'dmuffler';
@@ -12,3 +14,4 @@ try {
     exit();
 }
 
+?>

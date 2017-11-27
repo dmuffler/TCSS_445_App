@@ -2,50 +2,64 @@
 ini_set('display_errors', '1');
 error_reporting(E_ALL);
 
-// connect to the Database
-$dsn = 'mysql:host=localhost;dbname=dmuffler';
-$username = 'dmuffler';
-$password = 'Dawckyun';
+require('db.php');
 
-// 0 if a student, else an admin.
-$control = $_GET['my_control'];
+function login($db, $email, $password) {
+  $sql_statement = "
+    SELECT email, first_name, last_name, is_admin
+    FROM (
+      SELECT email, first_name, last_name, password, FALSE AS is_admin
+      FROM Student
+      UNION
+      SELECT email, first_name, last_name, password, TRUE AS is_admin
+      FROM Admin
+    ) AS Users
+    WHERE email = ? AND password = SHA(?);";
+    $arguments = array($email, $password);
+    $statement = $db->prepare($sql_statement);
 
-$email = $_GET['my_email'];
-$pass = $_GET['my_pass'];
-$account_check;
+    $statement->execute($arguments);
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if (count($results) == 1) {
+      $sid = uniqid();
+      session_id($sid);
+      session_start();
+
+      $result = $results[0];
+      $result['sid'] = $sid;
+
+      $_SESSION['email'] = $result['email'];
+      $_SESSION['first_name'] = $result['first_name'];
+      $_SESSION['last_name'] = $result['last_name'];
+      $_SESSION['is_admin'] = $result['is_admin'];
+
+      return $result;
+    } else {
+      return array("error" => "Email or password not found.");
+    }
+}
 
 try {
-    #make a new DB object to interact with
-    $db = new PDO($dsn, $username, $password);
-    // student account check
-    if ($control == 0) {
-        #build a SQL statement to query the DB
-        $account_check = "SELECT email, password FROM Student WHERE email = '$email'";
-        // admin account check
-    } else {
-        #build a SQL statement to query the DB
-        $account_check = "SELECT email, password FROM Admin WHERE email = '$email'";
-    }
-    
-    #make a query object
-    $user_query = $db->query($account_check);
+  if (!isset($_GET['email']) || !isset($_GET['password'])) {
+    echo json_encode(array('error' => 'Missing parameter.'));
+    exit();
+  }
 
-    // run the query on the DB
-    $users = $user_query->fetchAll(PDO::FETCH_ASSOC);
-    
-    // correct email and pass
-    if (!strcmp($users[0]['email'], $email) && !strcmp($pass, $users[0]['password'])) {
-        print "true";
-    // incorrect email or password
-    } else {
-        print "false";
-    }
-    
-    $db = null;
+  $email = $_GET['email'];
+  $password = $_GET['password'];
+
+  $result = login($db, $email, $password);
+
+  if (!$result) {
+    echo json_encode(array("error" => "Failed to sign in."));
+  } else {
+    echo json_encode($result);
+  }
+
 } catch (PDOException $e) {
     $error_message = $e->getMessage();
     $result = array("code"=>300, "message"=>"There was an error connecting to the database: $error_message");
     echo json_encode($result);
-    exit();
 }
 ?>
