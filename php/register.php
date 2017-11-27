@@ -16,13 +16,12 @@ $first_name = $_GET['my_first_name'];
 $last_name = $_GET['my_last_name'];
 $gender = $_GET['my_gender'];
 $account_check;
-$account_add;
 
 try {
     #make a new DB object to interact with
     $db = new PDO($dsn, $username, $password);
     // user register
-    if ($control == 1) {
+    if ($control == 0) {
         #build a SQL statement to query the DB
         $account_check = "SELECT email FROM Student WHERE email = '$email'";
     // admin register
@@ -33,6 +32,7 @@ try {
     
     #make a query object
     $user_query = $db->query($account_check);
+    print gettype($user_query);
     
     // run the query on the DB
     $users = $user_query->fetchAll(PDO::FETCH_ASSOC);
