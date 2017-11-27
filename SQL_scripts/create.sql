@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS Student (
   email VARCHAR(50) PRIMARY KEY
-  , password INT
+  , password BINARY(40)
   , first_name VARCHAR(25)
   , last_name VARCHAR(25)
   , gender CHAR)
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS Student (
 
 CREATE TABLE IF NOT EXISTS Admin (
     email VARCHAR(50) PRIMARY KEY
-  , password INT
+  , password BINARY(40)
   , first_name VARCHAR(25)
   , last_name VARCHAR(25))
 ;
