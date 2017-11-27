@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,21 +40,29 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        mListAdapter = new ProfessorListAdapter(getContext());
-        ListView professorListView = (ListView) view.findViewById(R.id.professorListView);
-        professorListView.setAdapter(mListAdapter);
-        professorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-        });
-
-        List<Professor> professors = new ArrayList<Professor>();
+        final List<Professor> professors = new ArrayList<Professor>();
         Professor testProfessor = new Professor("Test Professor");
         Professor professor = new Professor("Prof. Smith");
         professors.add(testProfessor);
         professors.add(professor);
+
+        mListAdapter = new ProfessorListAdapter(getContext());
+        final ListView professorListView = (ListView) view.findViewById(R.id.professorListView);
+        professorListView.setAdapter(mListAdapter);
+        professorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("positon", Integer.toString(i));
+                //professors.get(i);
+                mListener.onProfessorSelected(professors.get(i), "ProfessorFragment");
+            }
+        });
+
+//        List<Professor> professors = new ArrayList<Professor>();
+//        Professor testProfessor = new Professor("Test Professor");
+//        Professor professor = new Professor("Prof. Smith");
+//        professors.add(testProfessor);
+//        professors.add(professor);
         mListAdapter.setProfessors(professors);
 
         SearchView mSearchView = (SearchView) view.findViewById(R.id.searchField);
@@ -100,6 +109,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     public interface SearchFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String theFragString);
-        void onProfessorSelected(Professor professor);
+        void onProfessorSelected(Professor professor, String theFragString);
     }
 }
