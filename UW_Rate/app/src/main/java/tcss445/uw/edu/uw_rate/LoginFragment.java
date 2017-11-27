@@ -16,6 +16,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,6 +40,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private static final String PARTIAL_URL
             = "http://cssgate.insttech.washington.edu/~dmuffler/445/";
+    private static final String FAILURE = "FAILURE";
     private AsyncTask<String, Integer, String> mTask;
     private LoginFragmentInteractionListener mListener;
     private EditText mUsername;
@@ -54,10 +62,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         mUsername = (EditText) v.findViewById(R.id.usernameField);
         mPassword = (EditText) v.findViewById(R.id.passwordLogField);
-        mStudentRadio = (RadioButton) v.findViewById(R.id.studentRadioLoginButton);
-        mAdminRadio = (RadioButton) v.findViewById(R.id.adminRadioLoginButton);
-
-        mStudentRadio.setChecked(true);
 
         Button loginButton = (Button) v.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
@@ -86,20 +90,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        int radioCheck;
-        if (mStudentRadio.isChecked()) {
-            radioCheck = 0;
-        } else {
-            radioCheck = 1;
-        }
         switch (view.getId()) {
             case R.id.createButton:
-                mListener.loginFragmentInteraction("RegisterFrag", radioCheck);
+                mListener.loginFragmentInteraction("RegisterFrag");
                 break;
             case R.id.loginButton:
                 AsyncTask<String, Void, String> task = new LoginTask();
                 task.execute(PARTIAL_URL,
-                        "1",
                         mUsername.getText().toString(),
                         mPassword.getText().toString());
                 break;
@@ -117,7 +114,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface LoginFragmentInteractionListener {
-        void loginFragmentInteraction(String theFragString, int theRadioCheck);
+        void loginFragmentInteraction(String theFragString);
     }
 
 
@@ -131,19 +128,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         @Override
         protected String doInBackground(String... strings) {
-            if (strings.length != 4) {
-                throw new IllegalArgumentException("Two String arguments required.");
+            if (strings.length != 3) {
+                throw new IllegalArgumentException("URL, email, password strings required.");
             }
             String response = "";
             HttpURLConnection urlConnection = null;
             String url = strings[0];
-            String control = "?my_control=" + strings[1];
-            String email = "&my_email=" + strings[2];
-            String password = "&my_pass=" + strings[3];
+            String email = "?email=" + strings[1];
+            String password = "&password=" + strings[2];
+            String result;
 
             try {
-                URL urlObject = new URL(url + FILE + control + email + password);
-                Log.d("URL:", url + FILE + control + email + password);
+                URL urlObject = new URL(url + FILE + email + password);
+                Log.d("URL:", url + FILE + email + password);
                 urlConnection = (HttpURLConnection) urlObject.openConnection();
 
                 InputStream content = urlConnection.getInputStream();
@@ -163,18 +160,29 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 }
             }
             Log.d("Pass?:", response);
-            return response;
+            try {
+                if (new JSONObject(response).has("error")) {
+                    result = FAILURE;
+                } else {
+                    result = response;
+                }
+            } catch(JSONException e) {
+                result = FAILURE;
+            }
+            return result;
         }
 
         @Override
         protected void onPostExecute(String result) {
-            // Something wrong with the network or the URL.
-            if (result.equals("false")) {
+            System.out.println(result);
+            if (result == FAILURE) {
                 Toast.makeText(getActivity(), "Incorrect email or password", Toast.LENGTH_LONG)
                         .show();
                 return;
-            } else if(result.equals("true")){
-                mListener.loginFragmentInteraction("SearchFrag", 0);
+            } else {
+                LoginResult loginResult = new Gson().fromJson(result, LoginResult.class);
+                // TODO: store login results
+                mListener.loginFragmentInteraction("SearchFrag");
             }
         }
     }
