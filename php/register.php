@@ -7,7 +7,7 @@ $dsn = 'mysql:host=localhost;dbname=dmuffler';
 $username = 'dmuffler';
 $password = 'Dawckyun';
 
-// 1 if a student, else an admin.
+// 0 if a student, else an admin.
 $control = $_GET['my_control'];
 
 $email = $_GET['my_email'];
@@ -16,6 +16,7 @@ $first_name = $_GET['my_first_name'];
 $last_name = $_GET['my_last_name'];
 $gender = $_GET['my_gender'];
 $account_check;
+$account_add;
 
 try {
     #make a new DB object to interact with
@@ -32,7 +33,6 @@ try {
     
     #make a query object
     $user_query = $db->query($account_check);
-    print gettype($user_query);
     
     // run the query on the DB
     $users = $user_query->fetchAll(PDO::FETCH_ASSOC);
@@ -42,14 +42,14 @@ try {
         print "false";
     } else {
         // user does not exist
-        print "true";
-        
-        if ($control == 1) {
+        if ($control == 0) {
             $account_add = "INSERT INTO Student VALUES ('$email', '$pass', '$first_name', '$last_name', '$gender')";
         } else {
             $account_add = "INSERT INTO Admin VALUES ('$email', '$pass', '$first_name', '$last_name')";
         }
         $db->query($account_add);
+        
+        print true;
     }
    // echo json_encode($result);
     $db = null;
