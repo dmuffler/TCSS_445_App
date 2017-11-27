@@ -7,7 +7,7 @@ $dsn = 'mysql:host=localhost;dbname=dmuffler';
 $username = 'dmuffler';
 $password = 'Dawckyun';
 
-// 1 if a student, else an admin.
+// 0 if a student, else an admin.
 $control = $_GET['my_control'];
 
 $email = $_GET['my_email'];
