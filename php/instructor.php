@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
+
 require('db.php');
 $sql_statement;
 $create_statement = 'INSERT INTO Instructor (first_name, last_name, gender) VALUES (?, ?, ?)';
@@ -11,20 +14,26 @@ $delete_statement = 'DELETE FROM Instructor WHERE instructor_id = ?';
  * Returns if the agent is authenticated and an admin, else exits.
  */
 function auth_precheck() {
-  $sid = $_GET['sid'];
-  if ($sid != '') {
-    session_id($_GET['sid']);
-    session_start();
-    $control = $_SESSION['my_control'];
-    if ($control == '0') {
-      return;
+  if (isset($_GET['sid'])) {
+    $sid = $_GET['sid'];
+    if ($sid != '') {
+      session_id($sid);
+      session_start();
+      if ($_SESSION['is_admin'] == '1') {
+        return;
+      }
     }
   }
-  echo json_encode(array(:error => "Not authorized."));
+  echo json_encode(array("error" => "Not authorized."));
   exit();
 }
 
-$verb = $_GET['verb'];
+if (!isset($_GET['verb'])) {
+  $verb = 'UNKNOWN';
+} else {
+  $verb = $_GET['verb'];
+}
+
 if ($verb == 'CREATE') {
   auth_precheck();
   $sql_statement = $create_statement;
@@ -49,14 +58,14 @@ if ($verb == 'CREATE') {
   $instructor_id = $_GET['id'];
   $arguments = array($instructor_id);
 } else {
-  // unknown verb
-  echo json_encode(array(:error => "Unknown verb"));
+  /* unknown verb */
+  echo json_encode(array("error" => "Unknown verb"));
   exit();
 }
 
-$statement = $dbh->prepare($sql_statement);
-$statement->execute(arguments);
-$results = $statement->fetchAll();
+$statement = $db->prepare($sql_statement);
+$statement->execute($arguments);
+$results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 echo json_encode($results);
 
