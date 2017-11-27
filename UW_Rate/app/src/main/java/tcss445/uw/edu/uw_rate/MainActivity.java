@@ -106,11 +106,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void loginFragmentInteraction(String theFragString, int theRadioCheck) {
+    public void loginFragmentInteraction(String theFragString) {
         switch (theFragString) {
             case "RegisterFrag":
                 Bundle bundle = new Bundle();
-                bundle.putInt(getString(R.string.boo_key), theRadioCheck);
                 Fragment frag = new RegisterFragment();
                 frag.setArguments(bundle);
                 switchFrag(frag, theFragString);
