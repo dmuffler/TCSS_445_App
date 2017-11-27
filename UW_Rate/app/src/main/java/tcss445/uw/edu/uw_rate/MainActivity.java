@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onProfessorSelected(Professor professor, String theFragString) {
         Bundle bundle = new Bundle();
-        bundle.putString("professor", professor.getName());
+        bundle.putParcelable(Professor.class.getName(), professor);
         Fragment frag = new ProfessorFragment();
         frag.setArguments(bundle);
         switchFrag(frag, theFragString);
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void professorFragmentInteraction(String theFragString, int theRadioCheck) {
+    public void professorFragmentInteraction(String theFragString) {
         Log.d("professor", "inside professorfragmentinteraction");
     }
 }
