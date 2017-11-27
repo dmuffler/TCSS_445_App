@@ -60,7 +60,7 @@ class ProfessorListAdapter extends BaseAdapter implements Filterable {
 
         Professor professor = getItem(i);
 
-        mViewHolder.tvName.setText(professor.getName());
+        mViewHolder.tvName.setText(professor.getFullName());
 
         return view;
     }
@@ -95,15 +95,15 @@ class ProfessorListAdapter extends BaseAdapter implements Filterable {
                 final String query = constraint.toString().toLowerCase();
                 ArrayList<Professor> filteredList = new ArrayList<Professor>();
                 for(Professor prof: allItems){
-                    boolean matches = prof.getName().toLowerCase().contains(query);
-                    int partialRatio = FuzzySearch.ratio(prof.getName().toLowerCase(), query);
+                    boolean matches = prof.getFullName().toLowerCase().contains(query);
+                    int partialRatio = FuzzySearch.ratio(prof.getFullName().toLowerCase(), query);
                     if(matches || partialRatio > 50) { filteredList.add(prof); }
                 }
 
                 Collections.sort(filteredList, new Comparator<Professor>(){
                     public int compare(Professor obj1, Professor obj2) {
-                        int partialRatio1 = FuzzySearch.ratio(obj1.getName().toLowerCase(), query);
-                        int partialRatio2 = FuzzySearch.ratio(obj2.getName().toLowerCase(), query);
+                        int partialRatio1 = FuzzySearch.ratio(obj1.getFullName().toLowerCase(), query);
+                        int partialRatio2 = FuzzySearch.ratio(obj2.getFullName().toLowerCase(), query);
                         return Integer.compare(partialRatio1, partialRatio2);
                     }
                 });

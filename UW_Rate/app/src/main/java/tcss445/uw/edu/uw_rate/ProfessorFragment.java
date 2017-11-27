@@ -18,7 +18,7 @@ public class ProfessorFragment extends Fragment implements View.OnClickListener 
 
     private ProfessorFragmentInteractionListener mListener;
     //private Professor myProfessor;
-    private String professorName;
+    private Professor professor;
 
 
     public ProfessorFragment() {
@@ -31,10 +31,10 @@ public class ProfessorFragment extends Fragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_professor, container, false);
 
-        professorName = getArguments().getString("professor");
+        professor = getArguments().getParcelable(Professor.class.getName());
 
         final TextView professorNameLabel = (TextView) view.findViewById(R.id.professorName);
-        professorNameLabel.setText(professorName);
+        professorNameLabel.setText(professor.getFullName());
 
         //return inflater.inflate(R.layout.fragment_professor, container, false);
         return view;
@@ -63,6 +63,6 @@ public class ProfessorFragment extends Fragment implements View.OnClickListener 
     }
 
     public interface ProfessorFragmentInteractionListener {
-        void professorFragmentInteraction(String theFragString, int theRadioCheck);
+        void professorFragmentInteraction(String theFragString);
     }
 }
