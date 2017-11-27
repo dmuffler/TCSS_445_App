@@ -18,7 +18,7 @@ try {
     #make a new DB object to interact with
     $db = new PDO($dsn, $username, $password);
     // student account check
-    if ($control == 1) {
+    if ($control == 0) {
         #build a SQL statement to query the DB
         $account_check = "SELECT email, password FROM Student WHERE email = '$email'";
         // admin account check
