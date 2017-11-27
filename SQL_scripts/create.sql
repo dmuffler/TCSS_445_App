@@ -3,18 +3,18 @@ CREATE TABLE IF NOT EXISTS Student (
   , password BINARY(40)
   , first_name VARCHAR(25)
   , last_name VARCHAR(25)
-  , gender CHAR)
-;
+  , gender CHAR
+);
 
 CREATE TABLE IF NOT EXISTS Admin (
     email VARCHAR(50) PRIMARY KEY
   , password BINARY(40)
   , first_name VARCHAR(25)
-  , last_name VARCHAR(25))
-;
+  , last_name VARCHAR(25)
+);
 
 CREATE TABLE IF NOT EXISTS Rating (
-  instructor_id INT
+  instructor_id INT AUTO_INCREMENT
   , student_email VARCHAR(50)
   , title VARCHAR(25)
   , score INT CHECK (score >= 0 AND score <= 5)
@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS Rating (
 );
 
 CREATE TABLE IF NOT EXISTS Instructor (
-  instructor_id INT PRIMARY KEY
+  instructor_id INT PRIMARY KEY AUTO_INCREMENT
   , first_name VARCHAR(25)
   , last_name VARCHAR(25)
   , gender CHAR
-)
+);
