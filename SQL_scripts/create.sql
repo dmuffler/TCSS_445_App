@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS Instructor (
 );
 
 CREATE TABLE IF NOT EXISTS Rating (
-  instructor_id INT
+  instructor_id INT AUTO_INCREMENT
   , student_email VARCHAR(50)
   , title VARCHAR(25) NOT NULL
   , score INT CHECK (score > 0 AND score <= 5)
