@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity
         LoginFragment.LoginFragmentInteractionListener,
         RegisterFragment.RegisterFragmentInteractionListener,
         SearchFragment.SearchFragmentInteractionListener,
-        ProfessorFragment.ProfessorFragmentInteractionListener{
+        ProfessorFragment.ProfessorFragmentInteractionListener {
+
+    private String sessionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,5 +155,20 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void professorFragmentInteraction(String theFragString) {
         Log.d("professor", "inside professorfragmentinteraction");
+    }
+
+    @Override
+    public void onRatingChanged(Rating rating) {
+        // TODO: Create/Update rating in async task
+    }
+
+    @Override
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    @Override
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }
