@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Admin (
 );
 
 CREATE TABLE IF NOT EXISTS Instructor (
-    instructor_id INT PRIMARY KEY
+    instructor_id INT PRIMARY KEY AUTO_INCREMENT
   , first_name VARCHAR(25) NOT NULL
   , last_name VARCHAR(25) NOT NULL
   , gender CHAR NOT NULL
