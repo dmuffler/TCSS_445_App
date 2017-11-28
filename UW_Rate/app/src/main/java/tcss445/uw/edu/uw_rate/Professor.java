@@ -69,6 +69,11 @@ public class Professor implements Parcelable {
         }
     };
 
+    public static Professor fromInstructorResult(InstructorResult result) {
+        return new Professor(result.instructor_id, result.first_name, result.last_name,
+                Gender.fromChar(result.gender.toCharArray()[0]));
+    }
+
     public enum Gender {
         MALE, FEMALE, OTHER;
 
