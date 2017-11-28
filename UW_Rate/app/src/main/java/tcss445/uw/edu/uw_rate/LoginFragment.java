@@ -115,6 +115,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
      */
     public interface LoginFragmentInteractionListener {
         void loginFragmentInteraction(String theFragString);
+        void setSessionId(String sessionId);
     }
 
 
@@ -181,6 +182,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 return;
             } else {
                 LoginResult loginResult = new Gson().fromJson(result, LoginResult.class);
+                mListener.setSessionId(loginResult.sid);
                 // TODO: store login results
                 mListener.loginFragmentInteraction("SearchFrag");
             }
