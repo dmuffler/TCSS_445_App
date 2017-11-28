@@ -109,9 +109,9 @@ public class MainActivity extends AppCompatActivity
     public void loginFragmentInteraction(String theFragString) {
         switch (theFragString) {
             case "RegisterFrag":
-                Bundle bundle = new Bundle();
+                //Bundle bundle = new Bundle();
                 Fragment frag = new RegisterFragment();
-                frag.setArguments(bundle);
+                //frag.setArguments(bundle);
                 switchFrag(frag, theFragString);
                 break;
             case "SearchFrag":

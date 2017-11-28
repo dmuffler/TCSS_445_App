@@ -49,7 +49,7 @@ try {
         }
         $db->query($account_add);
         
-        print true;
+        print "true";
     }
    // echo json_encode($result);
     $db = null;
