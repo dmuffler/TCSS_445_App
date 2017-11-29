@@ -36,9 +36,6 @@ import java.util.Arrays;
  * to handle interaction events.
  */
 public class RegisterFragment extends Fragment implements View.OnClickListener {
-
-    private static final String PARTIAL_URL
-            = "http://cssgate.insttech.washington.edu/~dmuffler/445/";
     private static final String FAILURE = "FAILURE";
     private RegisterFragmentInteractionListener mListener;
     private EditText mUsername;
@@ -113,7 +110,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 md.update(mPassword.getText().toString().getBytes());
                 String pass = new String(md.digest());*/
                 AsyncTask<String, Void, String> task = new LoginTask();
-                task.execute(PARTIAL_URL,
+                task.execute(
                         String.valueOf(mControl),
                         mUsername.getText().toString(),
                         mPassword.getText().toString(),
@@ -156,13 +153,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             }
             String response = "";
             HttpURLConnection urlConnection = null;
-            String url = strings[0];
-            String control = "?my_control=" + strings[1];
-            String email = "&my_email=" + strings[2];
-            String password = "&my_pass=" + strings[3];
-            String first_name = "&my_first_name=" + strings[4];
-            String last_name = "&my_last_name=" + strings[5];
-            String gender = "&my_gender=" + strings[6];
+            String url = API.PATH;
+            String control = "?my_control=" + strings[0];
+            String email = "&my_email=" + strings[1];
+            String password = "&my_pass=" + strings[2];
+            String first_name = "&my_first_name=" + strings[3];
+            String last_name = "&my_last_name=" + strings[4];
+            String gender = "&my_gender=" + strings[5];
 
             try {
                 URL urlObject = new URL(url + FILE + control + email + password + first_name +

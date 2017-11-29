@@ -109,7 +109,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private class GetInstructorsTask extends AsyncTask<String, Void, String> {
 
         private static final String PATH
-                = "http://cssgate.insttech.washington.edu/~dmuffler/445/instructor.php";
+                = API.PATH + "instructor.php";
 
         @Override
         protected String doInBackground(String... strings) {

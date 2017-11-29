@@ -7,43 +7,48 @@ import android.support.annotation.NonNull;
 
 public class Instructor implements Parcelable {
 
-    private String id;
+    private String email;
+    private String phoneNumber;
     private String firstName;
     private String lastName;
-    private Gender gender;
+    private String positionTitle;
+    private String departmentName;
 
-    public Instructor(@NonNull String id, @NonNull String firstName, @NonNull String lastName,
-                      @NonNull Gender gender) {
-        this.id = id;
+    public Instructor(@NonNull String email, String phoneNumber,
+                      String firstName, String lastName,
+                      String positionTitle, String departmentName) {
+        this.email = email;
+        this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.gender = gender;
+        this.positionTitle = positionTitle;
+        this.departmentName = departmentName;
     }
 
-    public String getId() {
-        return id;
+    public String getEmail() {
+        return email;
     }
-
+    public String getPhoneNumber() { return phoneNumber;}
     public String getFirstName() {
         return this.firstName;
     }
     public String getLastName() {
         return this.lastName;
     }
+    public String getPositionTitle() { return this.positionTitle; }
+    public String getDepartmentName() { return this.departmentName; }
 
     public String getFullName() {
         return String.format("%s %s", this.firstName, this.lastName);
     }
 
-    public Gender getGender() {
-        return this.gender;
-    }
-
     public Instructor(Parcel in){
-        this.id = in.readString();
+        this.email = in.readString();
+        this.phoneNumber = in.readString();
         this.firstName = in.readString();
         this.lastName = in.readString();
-        this.gender = Gender.fromChar((char) in.readByte());
+        this.positionTitle = in.readString();
+        this.departmentName = in.readString();
     }
 
     @Override
@@ -53,10 +58,12 @@ public class Instructor implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
+        dest.writeString(this.email);
+        dest.writeString(this.phoneNumber);
         dest.writeString(this.firstName);
         dest.writeString(this.lastName);
-        dest.writeByte((byte) Gender.toChar(this.gender));
+        dest.writeString(this.positionTitle);
+        dest.writeString(this.departmentName);
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -70,7 +77,8 @@ public class Instructor implements Parcelable {
     };
 
     public static Instructor fromInstructorResult(InstructorResult result) {
-        return new Instructor(result.instructor_id, result.first_name, result.last_name,
-                Gender.fromChar(result.gender.toCharArray()[0]));
+        return new Instructor(result.email, result.phone_number,
+                result.first_name, result.last_name,
+                result.position_title, result.department_name);
     }
 }

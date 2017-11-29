@@ -37,9 +37,6 @@ import java.net.URL;
  * to handle interaction events.
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
-
-    private static final String PARTIAL_URL
-            = "http://cssgate.insttech.washington.edu/~dmuffler/445/";
     private static final String FAILURE = "FAILURE";
     private AsyncTask<String, Integer, String> mTask;
     private LoginFragmentInteractionListener mListener;
@@ -96,7 +93,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.loginButton:
                 AsyncTask<String, Void, String> task = new LoginTask();
-                task.execute(PARTIAL_URL,
+                task.execute(
                         mUsername.getText().toString(),
                         mPassword.getText().toString());
                 break;
@@ -129,14 +126,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         @Override
         protected String doInBackground(String... strings) {
-            if (strings.length != 3) {
+            if (strings.length != 2) {
                 throw new IllegalArgumentException("URL, email, password strings required.");
             }
             String response = "";
             HttpURLConnection urlConnection = null;
-            String url = strings[0];
-            String email = "?email=" + strings[1];
-            String password = "&password=" + strings[2];
+            String url = API.PATH;
+            String email = "?email=" + strings[0];
+            String password = "&password=" + strings[1];
             String result;
 
             try {
