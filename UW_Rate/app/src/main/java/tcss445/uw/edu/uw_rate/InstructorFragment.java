@@ -2,6 +2,7 @@ package tcss445.uw.edu.uw_rate;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -38,6 +40,7 @@ public class InstructorFragment extends Fragment {
     private Rating rating;
     private List<Rating> mRatings;
     private RatingListAdapter mRatingListAdapter;
+    private RatingsChangedListener mRatingsChangedListener;
 
 
     public InstructorFragment() {
@@ -60,6 +63,19 @@ public class InstructorFragment extends Fragment {
         final EditText editTextReview = (EditText) view.findViewById(R.id.editTextReview);
         final RatingBar ratingBar = (RatingBar) view.findViewById(R.id.editRating);
         Button submitReview = (Button) view.findViewById(R.id.submitRatingButton);
+        final API.Listener<RatingResult[]> ratingChangedCallback = new API.Listener<RatingResult[]>() {
+            @Override
+            public void onComplete(RatingResult[] results) {
+                Log.d("::onComplete", "ratingChanged");
+                new FetchRatingsTask(getSession().getSessionId(), mInstructor).execute();
+            }
+
+            @Override
+            public void onError() {
+                Log.d("::onError", "rating changed");
+            }
+        };
+
         View.OnClickListener ratingChangedListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,9 +83,10 @@ public class InstructorFragment extends Fragment {
                 String reviewText = editTextReview.getText().toString();
                 rating.setScore(ratingScore);
                 rating.setComment(reviewText);
-                mListener.onRatingChanged(rating);
+                mListener.onRatingChanged(rating, ratingChangedCallback);
             }
         };
+
         ratingBar.setOnClickListener(ratingChangedListener);
         submitReview.setOnClickListener(ratingChangedListener);
 
@@ -83,17 +100,71 @@ public class InstructorFragment extends Fragment {
                     mInstructor = instructor;
                 }
                 if (mInstructor != null && instructorNameLabel != null) {
+                    Session session = getSession();
                     instructorNameLabel.setText(mInstructor.getFullName());
                     positionTitleLabel.setText(mInstructor.getPositionTitle());
                     departmentNameLabel.setText(mInstructor.getDepartmentName());
-                    new FetchRatingsTask(mListener.getSessionId(), mInstructor).execute();
+                    new FetchRatingsTask(session.getSessionId(), mInstructor).execute();
                 }
+            }
+        };
+
+        final ProgressBar ratingProgress1 = (ProgressBar) view.findViewById(R.id.ratingProgress1);
+        final ProgressBar ratingProgress2 = (ProgressBar) view.findViewById(R.id.ratingProgress2);
+        final ProgressBar ratingProgress3 = (ProgressBar) view.findViewById(R.id.ratingProgress3);
+        final ProgressBar ratingProgress4 = (ProgressBar) view.findViewById(R.id.ratingProgress4);
+        final ProgressBar ratingProgress5 = (ProgressBar) view.findViewById(R.id.ratingProgress5);
+
+        final TextView numRating1 = (TextView) view.findViewById(R.id.numRating1);
+        final TextView numRating2 = (TextView) view.findViewById(R.id.numRating2);
+        final TextView numRating3 = (TextView) view.findViewById(R.id.numRating3);
+        final TextView numRating4 = (TextView) view.findViewById(R.id.numRating4);
+        final TextView numRating5 = (TextView) view.findViewById(R.id.numRating5);
+
+
+        mRatingsChangedListener = new RatingsChangedListener() {
+            @Override
+            public void onRatingsChanged(List<Rating> ratings) {
+                if (ratings != null) {
+                    mRatings = ratings;
+                }
+                if (mRatings != null) {
+                    mRatingListAdapter.setRatings(mRatings);
+                }
+                int totalRatings = 0;
+                int[] numRatings = new int[5];
+                int[] ratingRatio = new int[5];
+                for (Rating rating : ratings) {
+                    numRatings[rating.getScore()-1]++;
+                    totalRatings++;
+                }
+                for (int i = 0; i < numRatings.length; i++) {
+                    ratingRatio[i] = Math.round(100f * numRatings[i] / new Float(totalRatings));
+                }
+                ratingProgress1.setProgress(ratingRatio[0]);
+                ratingProgress2.setProgress(ratingRatio[1]);
+                ratingProgress3.setProgress(ratingRatio[2]);
+                ratingProgress4.setProgress(ratingRatio[3]);
+                ratingProgress5.setProgress(ratingRatio[4]);
+
+                numRating1.setText(String.format("%d", numRatings[0]));
+                numRating2.setText(String.format("%d", numRatings[1]));
+                numRating3.setText(String.format("%d", numRatings[2]));
+                numRating4.setText(String.format("%d", numRatings[3]));
+                numRating5.setText(String.format("%d", numRatings[4]));
             }
         };
 
         mInstructorChangedListener.onInstructorChanged(instructor);
 
         return view;
+    }
+
+    public Session getSession() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(MainActivity.SESSION_PREFERENCES, Context.MODE_PRIVATE);
+        String json = preferences.getString(MainActivity.SESSION, "{}");
+        Session session = new Gson().fromJson(json, Session.class);
+        return session;
     }
 
     @Override
@@ -107,7 +178,7 @@ public class InstructorFragment extends Fragment {
             } else if(instructor != null) {
                 mInstructor = instructor;
             }
-            rating = new Rating(mInstructor.getEmail(), 0, null);
+            rating = new Rating(mInstructor.getEmail(), 0, 0, null);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -122,12 +193,16 @@ public class InstructorFragment extends Fragment {
 
     public interface InstructorFragmentInteractionListener {
         void instructorFragmentInteraction(String theFragString);
-        void onRatingChanged(Rating rating);
-        String getSessionId();
+        void onRatingChanged(Rating rating, API.Listener<RatingResult[]> listener);
+
     }
 
     public interface InstructorChangedListener {
         void onInstructorChanged(Instructor instructor);
+    }
+
+    public interface RatingsChangedListener {
+        void onRatingsChanged(List<Rating> ratings);
     }
 
     public class FetchRatingsTask extends AsyncTask<String, Void, String> {
@@ -170,11 +245,11 @@ public class InstructorFragment extends Fragment {
         protected void onPostExecute(String result) {
             Log.d("rating results", result);
             RatingResult[] ratingResults = new Gson().fromJson(result, RatingResult[].class);
-            mRatings = new ArrayList<Rating>();
+            List<Rating> ratings = new ArrayList<Rating>();
             for (RatingResult ratingResult : ratingResults) {
-                mRatings.add(Rating.fromRatingResult(ratingResult));
+                ratings.add(Rating.fromRatingResult(ratingResult));
             }
-            mRatingListAdapter.setRatings(mRatings);
+            mRatingsChangedListener.onRatingsChanged(ratings);
         }
     }
 }

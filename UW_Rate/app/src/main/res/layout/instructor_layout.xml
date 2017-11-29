@@ -86,18 +86,19 @@
         android:stepSize="1" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/ratingProgress5"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/departmentName"
         android:layout_toEndOf="@+id/rating5"
-        android:max="1"
-        android:progress="1"
-        android:progressDrawable="@color/rating5" />
+        android:layout_toStartOf="@+id/numRating4"
+        android:max="100"
+        android:progress="0"
+        android:progressTint="@color/rating5" />
 
     <ProgressBar
-        android:id="@+id/progressBar2"
+        android:id="@+id/ratingProgress4"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -105,84 +106,88 @@
         android:layout_below="@+id/rating5"
         android:layout_toEndOf="@+id/rating4"
         android:layout_toStartOf="@+id/numRating3"
-        android:max="1"
-        android:progress="1"
-        android:progressDrawable="@color/rating4" />
+        android:max="100"
+        android:progress="0"
+        android:progressTint="@color/rating4" />
 
     <ProgressBar
-        android:id="@+id/progressBar3"
+        android:id="@+id/ratingProgress3"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/ratingProgress2"
         android:layout_below="@+id/rating4"
         android:layout_toEndOf="@+id/rating3"
-        android:max="1"
-        android:progress="1"
-        android:progressDrawable="@color/rating3" />
+        android:max="100"
+        android:progress="0"
+        android:progressTint="@color/rating3" />
 
     <ProgressBar
-        android:id="@+id/progressBar4"
+        android:id="@+id/ratingProgress2"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/rating1"
+        android:layout_alignEnd="@+id/editRating"
         android:layout_below="@+id/rating3"
         android:layout_toEndOf="@+id/rating1"
-        android:max="1"
-        android:progress="1"
-        android:progressDrawable="@color/rating2" />
+        android:max="100"
+        android:progress="0"
+        android:progressTint="@color/rating2" />
 
     <ProgressBar
-        android:id="@+id/progressBar5"
+        android:id="@+id/ratingProgress1"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBar4"
+        android:layout_below="@+id/ratingProgress2"
         android:layout_toEndOf="@+id/rating1"
-        android:max="1"
-        android:progress="1"
-        android:progressDrawable="@color/rating1" />
+        android:layout_toStartOf="@+id/numRating1"
+        android:max="100"
+        android:progress="0"
+        android:progressTint="@color/rating1" />
 
     <TextView
         android:id="@+id/numRating5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/progressBar2"
-        android:layout_alignTop="@+id/progressBar"
-        android:layout_toEndOf="@+id/progressBar"
+        android:layout_above="@+id/ratingProgress4"
+        android:layout_alignTop="@+id/ratingProgress5"
+        android:layout_toEndOf="@+id/ratingProgress5"
         android:text="0" />
 
     <TextView
         android:id="@+id/numRating4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/progressBar3"
+        android:layout_above="@+id/ratingProgress3"
         android:layout_below="@+id/numRating5"
-        android:layout_toEndOf="@+id/progressBar2"
+        android:layout_toEndOf="@+id/ratingProgress4"
         android:text="0" />
 
     <TextView
         android:id="@+id/numRating3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/progressBar4"
+        android:layout_above="@+id/ratingProgress2"
         android:layout_below="@+id/numRating4"
-        android:layout_toEndOf="@+id/progressBar3"
+        android:layout_toEndOf="@+id/ratingProgress3"
         android:text="0" />
 
     <TextView
         android:id="@+id/numRating1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/progressBar5"
-        android:layout_toEndOf="@+id/progressBar4"
+        android:layout_alignBottom="@+id/ratingProgress1"
+        android:layout_toEndOf="@+id/ratingProgress2"
         android:text="0" />
 
     <TextView
         android:id="@+id/numRating2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/progressBar5"
-        android:layout_toEndOf="@+id/progressBar3"
+        android:layout_above="@+id/ratingProgress1"
+        android:layout_toEndOf="@+id/ratingProgress3"
         android:text="0" />
 
     <TextView

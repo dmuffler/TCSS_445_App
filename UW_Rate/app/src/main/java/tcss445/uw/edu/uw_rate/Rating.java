@@ -3,13 +3,17 @@ package tcss445.uw.edu.uw_rate;
 public class Rating {
 
     private String studentId;
-    private String professorId;
+    private String instructorId;
     private int score;
+    private int hotness;
     private String comment;
+    private String authorFirstName;
+    private String authorLastName;
 
-    public Rating(String professorId, int score, String comment) {
-        this.professorId = professorId;
+    public Rating(String instructorId, int score, int hotness, String comment) {
+        this.instructorId = instructorId;
         this.score = score;
+        this.hotness = hotness;
         this.comment = comment;
     }
 
@@ -20,8 +24,8 @@ public class Rating {
         return studentId;
     }
 
-    public String getProfessorId() {
-        return professorId;
+    public String getInstructorId() {
+        return instructorId;
     }
 
     public int getScore() {
@@ -40,7 +44,26 @@ public class Rating {
         this.comment = comment;
     }
 
+    public void setAuthorFirstName(String firstName) {
+        this.authorFirstName = firstName;
+    }
+
+    public void setAuthorLastName(String lastName) {
+        this.authorLastName = lastName;
+    }
+
+    public String getAuthorFullName() {
+        return String.format("%s %s", authorFirstName, authorLastName);
+    }
+
     public static Rating fromRatingResult(RatingResult ratingResult) {
-        return new Rating(ratingResult.instructor_email, Integer.valueOf(ratingResult.score), ratingResult.comment);
+        Rating rating = new Rating(ratingResult.instructor_email, Integer.valueOf(ratingResult.score), Integer.valueOf(ratingResult.hotness), ratingResult.comment);
+        rating.setAuthorFirstName(ratingResult.author_first_name);
+        rating.setAuthorLastName(ratingResult.author_last_name);
+        return rating;
+    }
+
+    public Object getHotness() {
+        return hotness;
     }
 }
