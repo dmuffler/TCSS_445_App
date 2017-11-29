@@ -1,7 +1,6 @@
 package tcss445.uw.edu.uw_rate;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,23 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 
 /**
@@ -37,12 +30,12 @@ import java.util.function.Function;
  */
 public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener {
 
-    private List<Professor> mProfessors;
+    private List<Instructor> mInstructors;
     private SearchFragmentInteractionListener mListener;
-    private ProfessorListAdapter mListAdapter;
+    private InstructorListAdapter mListAdapter;
 
     public SearchFragment() {
-        mProfessors = new ArrayList<Professor>();
+        mInstructors = new ArrayList<Instructor>();
     }
 
     @Override
@@ -51,17 +44,17 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        mListAdapter = new ProfessorListAdapter(getContext());
+        mListAdapter = new InstructorListAdapter(getContext());
         final ListView professorListView = (ListView) view.findViewById(R.id.professorListView);
         professorListView.setAdapter(mListAdapter);
         professorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mListener.onProfessorSelected(mProfessors.get(i), "ProfessorFragment");
+                mListener.onInstructorSelected(mInstructors.get(i), "InstructorFragment");
             }
         });
 
-        mListAdapter.setProfessors(mProfessors);
+        mListAdapter.setInstructors(mInstructors);
 
         SearchView mSearchView = (SearchView) view.findViewById(R.id.searchField);
         mSearchView.setOnQueryTextListener(this);
@@ -110,7 +103,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     public interface SearchFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String theFragString);
-        void onProfessorSelected(Professor professor, String theFragString);
+        void onInstructorSelected(Instructor instructor, String theFragString);
     }
 
     private class GetInstructorsTask extends AsyncTask<String, Void, String> {
@@ -149,11 +142,11 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         protected void onPostExecute(String result) {
             Log.d("searchposexecute", result);
             InstructorResult[]  instructorResults = new Gson().fromJson(result, InstructorResult[].class);
-            mProfessors = new ArrayList<Professor>();
+            mInstructors = new ArrayList<Instructor>();
             for (InstructorResult instructorResult : instructorResults) {
-                mProfessors.add(Professor.fromInstructorResult(instructorResult));
+                mInstructors.add(Instructor.fromInstructorResult(instructorResult));
             }
-            mListAdapter.setProfessors(mProfessors);
+            mListAdapter.setInstructors(mInstructors);
         }
     }
 }

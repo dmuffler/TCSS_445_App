@@ -1,11 +1,8 @@
 package tcss445.uw.edu.uw_rate;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,15 +13,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         LoginFragment.LoginFragmentInteractionListener,
         RegisterFragment.RegisterFragmentInteractionListener,
         SearchFragment.SearchFragmentInteractionListener,
-        ProfessorFragment.ProfessorFragmentInteractionListener {
+        InstructorFragment.InstructorFragmentInteractionListener {
 
     private String sessionId;
 
@@ -137,10 +132,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onProfessorSelected(Professor professor, String theFragString) {
+    public void onInstructorSelected(Instructor instructor, String theFragString) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(Professor.class.getName(), professor);
-        Fragment frag = new ProfessorFragment();
+        bundle.putParcelable(Instructor.class.getName(), instructor);
+        Fragment frag = new InstructorFragment();
         frag.setArguments(bundle);
         switchFrag(frag, theFragString);
     }
@@ -153,8 +148,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void professorFragmentInteraction(String theFragString) {
-        Log.d("professor", "inside professorfragmentinteraction");
+    public void instructorFragmentInteraction(String theFragString) {
+        Log.d("instructor", "inside instructorfragmentinteraction");
     }
 
     @Override

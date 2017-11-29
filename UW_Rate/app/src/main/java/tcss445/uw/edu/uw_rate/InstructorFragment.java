@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -29,32 +27,32 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfessorFragment extends Fragment {
+public class InstructorFragment extends Fragment {
 
-    private ProfessorFragmentInteractionListener mListener;
-    private Professor professor;
+    private InstructorFragmentInteractionListener mListener;
+    private Instructor instructor;
     private Rating rating;
-    private TextView professorNameLabel;
+    private TextView instructorNameLabel;
     private List<Rating> mRatings;
     private RatingListAdapter mRatingListAdapter;
 
 
-    public ProfessorFragment() {
+    public InstructorFragment() {
         mRatings = new ArrayList<Rating>();
     }
 
-    private void setProfessor(Professor professor) {
-        if (!professor.equals(this.professor)) {
-            this.professor = professor;
-            onProfessorChanged();
+    private void setInstructor(Instructor instructor) {
+        if (!instructor.equals(this.instructor)) {
+            this.instructor = instructor;
+            onInstructorChanged();
         }
     }
 
-    private void onProfessorChanged() {
-        if (professorNameLabel != null) {
-            professorNameLabel.setText(professor.getFullName());
+    private void onInstructorChanged() {
+        if (instructorNameLabel != null) {
+            instructorNameLabel.setText(instructor.getFullName());
         }
-        new FetchRatingsTask(mListener.getSessionId(), professor).execute();
+        new FetchRatingsTask(mListener.getSessionId(), instructor).execute();
     }
 
     @Override
@@ -65,8 +63,8 @@ public class ProfessorFragment extends Fragment {
 
         mRatingListAdapter = new RatingListAdapter(getContext());
 
-        professorNameLabel = (TextView) view.findViewById(R.id.instructorName);
-        setProfessor((Professor) getArguments().getParcelable(Professor.class.getName()));
+        instructorNameLabel = (TextView) view.findViewById(R.id.instructorName);
+        setInstructor((Instructor) getArguments().getParcelable(Instructor.class.getName()));
 
         final EditText editTextReview = (EditText) view.findViewById(R.id.editTextReview);
         final RatingBar ratingBar = (RatingBar) view.findViewById(R.id.editRating);
@@ -93,10 +91,10 @@ public class ProfessorFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ProfessorFragmentInteractionListener) {
-            mListener = (ProfessorFragmentInteractionListener) context;
-            setProfessor((Professor) getArguments().getParcelable(Professor.class.getName()));
-            rating = new Rating(professor.getId(), 0, null);
+        if (context instanceof InstructorFragmentInteractionListener) {
+            mListener = (InstructorFragmentInteractionListener) context;
+            setInstructor((Instructor) getArguments().getParcelable(Instructor.class.getName()));
+            rating = new Rating(instructor.getId(), 0, null);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -109,8 +107,8 @@ public class ProfessorFragment extends Fragment {
         mListener = null;
     }
 
-    public interface ProfessorFragmentInteractionListener {
-        void professorFragmentInteraction(String theFragString);
+    public interface InstructorFragmentInteractionListener {
+        void instructorFragmentInteraction(String theFragString);
         void onRatingChanged(Rating rating);
         String getSessionId();
     }
@@ -121,16 +119,16 @@ public class ProfessorFragment extends Fragment {
                 = "http://cssgate.insttech.washington.edu/~dmuffler/445/rating.php";
 
         private String sessionId;
-        private Professor professor;
+        private Instructor instructor;
 
-        public FetchRatingsTask(String sessionId, Professor professor) {
+        public FetchRatingsTask(String sessionId, Instructor instructor) {
             this.sessionId = sessionId;
-            this.professor = professor;
+            this.instructor = instructor;
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            String url = String.format("%s?verb=READ_ALL&sid=%s&instructor_id=%s", PATH, sessionId, professor.getId());
+            String url = String.format("%s?verb=READ_ALL&sid=%s&instructor_id=%s", PATH, sessionId, instructor.getId());
             String response = "";
 
             HttpURLConnection urlConnection = null;
