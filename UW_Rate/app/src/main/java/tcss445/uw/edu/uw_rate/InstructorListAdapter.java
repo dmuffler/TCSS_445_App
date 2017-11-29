@@ -16,20 +16,20 @@ import java.util.List;
 
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
-class ProfessorListAdapter extends BaseAdapter implements Filterable {
+class InstructorListAdapter extends BaseAdapter implements Filterable {
 
     private final Context context;
     private final LayoutInflater inflater;
 
-    public ProfessorListAdapter(Context context) {
+    public InstructorListAdapter(Context context) {
         this.context = context;
         this.inflater = LayoutInflater.from(this.context);
-        this.allItems = new ArrayList<Professor>();
-        this.items = new ArrayList<Professor>();
+        this.allItems = new ArrayList<Instructor>();
+        this.items = new ArrayList<Instructor>();
     }
 
-    List<Professor> allItems;
-    List<Professor> items;
+    List<Instructor> allItems;
+    List<Instructor> items;
 
     @Override
     public int getCount() {
@@ -37,7 +37,7 @@ class ProfessorListAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
-    public Professor getItem(int i) {
+    public Instructor getItem(int i) {
         return items.get(i);
     }
 
@@ -48,43 +48,43 @@ class ProfessorListAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ProfessorViewHolder mViewHolder;
+        InstructorViewHolder mViewHolder;
 
         if (view == null) {
-            view = inflater.inflate(R.layout.layout_professor_list_item, viewGroup, false);
-            mViewHolder = new ProfessorViewHolder(view);
+            view = inflater.inflate(R.layout.layout_instructor_list_item, viewGroup, false);
+            mViewHolder = new InstructorViewHolder(view);
             view.setTag(mViewHolder);
         } else {
-            mViewHolder = (ProfessorViewHolder) view.getTag();
+            mViewHolder = (InstructorViewHolder) view.getTag();
         }
 
-        Professor professor = getItem(i);
+        Instructor instructor = getItem(i);
 
-        mViewHolder.tvName.setText(professor.getFullName());
+        mViewHolder.tvName.setText(instructor.getFullName());
 
         return view;
     }
 
-    private class ProfessorViewHolder {
+    private class InstructorViewHolder {
         TextView tvName;
 
-        public ProfessorViewHolder(View item) {
-            tvName = (TextView) item.findViewById(R.id.professorName);
+        public InstructorViewHolder(View item) {
+            tvName = (TextView) item.findViewById(R.id.instructorName);
         }
     }
 
     @Override
     public Filter getFilter() {
-        return new ProfessorListFilter();
+        return new InstructorListFilter();
     }
 
-    public void setProfessors(List<Professor> professors) {
-        this.allItems = new ArrayList<Professor>(professors);
-        this.items = new ArrayList<Professor>(professors);
+    public void setInstructors(List<Instructor> instructors) {
+        this.allItems = new ArrayList<Instructor>(instructors);
+        this.items = new ArrayList<Instructor>(instructors);
         notifyDataSetChanged();
     }
 
-    public class ProfessorListFilter extends Filter {
+    public class InstructorListFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults result = new FilterResults();
@@ -93,15 +93,15 @@ class ProfessorListAdapter extends BaseAdapter implements Filterable {
                 result.count = allItems.size();
             } else {
                 final String query = constraint.toString().toLowerCase();
-                ArrayList<Professor> filteredList = new ArrayList<Professor>();
-                for(Professor prof: allItems){
-                    boolean matches = prof.getFullName().toLowerCase().contains(query);
-                    int partialRatio = FuzzySearch.ratio(prof.getFullName().toLowerCase(), query);
-                    if(matches || partialRatio > 50) { filteredList.add(prof); }
+                ArrayList<Instructor> filteredList = new ArrayList<Instructor>();
+                for(Instructor instructor: allItems){
+                    boolean matches = instructor.getFullName().toLowerCase().contains(query);
+                    int partialRatio = FuzzySearch.ratio(instructor.getFullName().toLowerCase(), query);
+                    if(matches || partialRatio > 50) { filteredList.add(instructor); }
                 }
 
-                Collections.sort(filteredList, new Comparator<Professor>(){
-                    public int compare(Professor obj1, Professor obj2) {
+                Collections.sort(filteredList, new Comparator<Instructor>(){
+                    public int compare(Instructor obj1, Instructor obj2) {
                         int partialRatio1 = FuzzySearch.ratio(obj1.getFullName().toLowerCase(), query);
                         int partialRatio2 = FuzzySearch.ratio(obj2.getFullName().toLowerCase(), query);
                         return Integer.compare(partialRatio1, partialRatio2);
@@ -117,7 +117,7 @@ class ProfessorListAdapter extends BaseAdapter implements Filterable {
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            items = (ArrayList<Professor>) filterResults.values;
+            items = (ArrayList<Instructor>) filterResults.values;
             notifyDataSetChanged();
         }
     }

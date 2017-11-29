@@ -5,15 +5,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-public class Professor implements Parcelable {
+public class Instructor implements Parcelable {
 
     private String id;
     private String firstName;
     private String lastName;
     private Gender gender;
 
-    public Professor(@NonNull String id, @NonNull String firstName, @NonNull String lastName,
-                     @NonNull Gender gender) {
+    public Instructor(@NonNull String id, @NonNull String firstName, @NonNull String lastName,
+                      @NonNull Gender gender) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,7 +39,7 @@ public class Professor implements Parcelable {
         return this.gender;
     }
 
-    public Professor(Parcel in){
+    public Instructor(Parcel in){
         this.id = in.readString();
         this.firstName = in.readString();
         this.lastName = in.readString();
@@ -60,17 +60,17 @@ public class Professor implements Parcelable {
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public Professor createFromParcel(Parcel in) {
-            return new Professor(in);
+        public Instructor createFromParcel(Parcel in) {
+            return new Instructor(in);
         }
 
-        public Professor[] newArray(int size) {
-            return new Professor[size];
+        public Instructor[] newArray(int size) {
+            return new Instructor[size];
         }
     };
 
-    public static Professor fromInstructorResult(InstructorResult result) {
-        return new Professor(result.instructor_id, result.first_name, result.last_name,
+    public static Instructor fromInstructorResult(InstructorResult result) {
+        return new Instructor(result.instructor_id, result.first_name, result.last_name,
                 Gender.fromChar(result.gender.toCharArray()[0]));
     }
 }

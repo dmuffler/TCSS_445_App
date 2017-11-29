@@ -58,9 +58,9 @@ class RatingListAdapter extends BaseAdapter {
             mViewHolder = (RatingViewHolder) view.getTag();
         }
 
-        Rating professor = getItem(i);
+        Rating rating = getItem(i);
 
-        mViewHolder.tvName.setText(professor.getComment());
+        mViewHolder.tvName.setText(rating.getComment());
 
         return view;
     }
