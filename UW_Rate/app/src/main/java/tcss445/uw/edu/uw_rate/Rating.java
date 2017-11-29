@@ -41,6 +41,6 @@ public class Rating {
     }
 
     public static Rating fromRatingResult(RatingResult ratingResult) {
-        return new Rating(ratingResult.instructor_id, Integer.valueOf(ratingResult.score), ratingResult.comment);
+        return new Rating(ratingResult.instructor_email, Integer.valueOf(ratingResult.score), ratingResult.comment);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,7 @@ public class InstructorFragment extends Fragment {
         if (context instanceof InstructorFragmentInteractionListener) {
             mListener = (InstructorFragmentInteractionListener) context;
             setInstructor((Instructor) getArguments().getParcelable(Instructor.class.getName()));
-            rating = new Rating(instructor.getId(), 0, null);
+            rating = new Rating(instructor.getEmail(), 0, null);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -115,8 +116,6 @@ public class InstructorFragment extends Fragment {
 
     public class FetchRatingsTask extends AsyncTask<String, Void, String> {
 
-        private static final String PATH
-                = "http://cssgate.insttech.washington.edu/~dmuffler/445/rating.php";
 
         private String sessionId;
         private Instructor instructor;
@@ -128,7 +127,7 @@ public class InstructorFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
-            String url = String.format("%s?verb=READ_ALL&sid=%s&instructor_id=%s", PATH, sessionId, instructor.getId());
+            String url = String.format("%srating.php?verb=READ_ALL&sid=%s&instructor_email=%s", API.PATH, sessionId, instructor.getEmail());
             String response = "";
 
             HttpURLConnection urlConnection = null;
@@ -155,6 +154,7 @@ public class InstructorFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
+            Log.d("rating results", result);
             RatingResult[] ratingResults = new Gson().fromJson(result, RatingResult[].class);
             mRatings = new ArrayList<Rating>();
             for (RatingResult ratingResult : ratingResults) {
