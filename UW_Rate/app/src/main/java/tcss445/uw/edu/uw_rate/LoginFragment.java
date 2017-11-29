@@ -173,7 +173,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         @Override
         protected void onPostExecute(String result) {
             System.out.println(result);
-            if (result == FAILURE) {
+            if (result.equals(FAILURE)) {
                 Toast.makeText(getActivity(), "Incorrect email or password", Toast.LENGTH_LONG)
                         .show();
                 return;
