@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -30,10 +32,10 @@ import java.util.List;
  */
 public class InstructorFragment extends Fragment {
 
+    private InstructorChangedListener mInstructorChangedListener;
     private InstructorFragmentInteractionListener mListener;
-    private Instructor instructor;
+    private Instructor mInstructor;
     private Rating rating;
-    private TextView instructorNameLabel;
     private List<Rating> mRatings;
     private RatingListAdapter mRatingListAdapter;
 
@@ -42,30 +44,18 @@ public class InstructorFragment extends Fragment {
         mRatings = new ArrayList<Rating>();
     }
 
-    private void setInstructor(Instructor instructor) {
-        if (!instructor.equals(this.instructor)) {
-            this.instructor = instructor;
-            onInstructorChanged();
-        }
-    }
-
-    private void onInstructorChanged() {
-        if (instructorNameLabel != null) {
-            instructorNameLabel.setText(instructor.getFullName());
-        }
-        new FetchRatingsTask(mListener.getSessionId(), instructor).execute();
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.instructor_layout, container, false);
+        Instructor instructor = (Instructor) getArguments().getParcelable(Instructor.class.getName());
 
         mRatingListAdapter = new RatingListAdapter(getContext());
 
-        instructorNameLabel = (TextView) view.findViewById(R.id.instructorName);
-        setInstructor((Instructor) getArguments().getParcelable(Instructor.class.getName()));
+        final TextView instructorNameLabel = (TextView) view.findViewById(R.id.instructorName);
+        final TextView positionTitleLabel = (TextView) view.findViewById(R.id.positionTitle);
+        final TextView departmentNameLabel = (TextView) view.findViewById(R.id.departmentName);
 
         final EditText editTextReview = (EditText) view.findViewById(R.id.editTextReview);
         final RatingBar ratingBar = (RatingBar) view.findViewById(R.id.editRating);
@@ -86,6 +76,23 @@ public class InstructorFragment extends Fragment {
         ListView ratingsListView = (ListView) view.findViewById(R.id.instructorReviewList);
         ratingsListView.setAdapter(mRatingListAdapter);
 
+        mInstructorChangedListener = new InstructorChangedListener() {
+            @Override
+            public void onInstructorChanged(Instructor instructor) {
+                if (instructor == null) {
+                    mInstructor = instructor;
+                }
+                if (mInstructor != null && instructorNameLabel != null) {
+                    instructorNameLabel.setText(mInstructor.getFullName());
+                    positionTitleLabel.setText(mInstructor.getPositionTitle());
+                    departmentNameLabel.setText(mInstructor.getDepartmentName());
+                    new FetchRatingsTask(mListener.getSessionId(), mInstructor).execute();
+                }
+            }
+        };
+
+        mInstructorChangedListener.onInstructorChanged(instructor);
+
         return view;
     }
 
@@ -94,8 +101,13 @@ public class InstructorFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof InstructorFragmentInteractionListener) {
             mListener = (InstructorFragmentInteractionListener) context;
-            setInstructor((Instructor) getArguments().getParcelable(Instructor.class.getName()));
-            rating = new Rating(instructor.getEmail(), 0, null);
+            Instructor instructor = (Instructor) getArguments().getParcelable(Instructor.class.getName());
+            if (mInstructorChangedListener != null) {
+                mInstructorChangedListener.onInstructorChanged(instructor);
+            } else if(instructor != null) {
+                mInstructor = instructor;
+            }
+            rating = new Rating(mInstructor.getEmail(), 0, null);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -114,9 +126,11 @@ public class InstructorFragment extends Fragment {
         String getSessionId();
     }
 
+    public interface InstructorChangedListener {
+        void onInstructorChanged(Instructor instructor);
+    }
+
     public class FetchRatingsTask extends AsyncTask<String, Void, String> {
-
-
         private String sessionId;
         private Instructor instructor;
 
