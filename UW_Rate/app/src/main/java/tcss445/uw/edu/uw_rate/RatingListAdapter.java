@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -60,16 +61,22 @@ class RatingListAdapter extends BaseAdapter {
 
         Rating rating = getItem(i);
 
-        mViewHolder.tvName.setText(rating.getComment());
+        mViewHolder.tvComment.setText(rating.getComment());
+        mViewHolder.tvRating.setRating(rating.getScore());
+        mViewHolder.tvAuthor.setText(rating.getAuthorFullName());
 
         return view;
     }
 
     private class RatingViewHolder {
-        TextView tvName;
+        RatingBar tvRating;
+        TextView tvComment;
+        TextView tvAuthor;
 
         public RatingViewHolder(View item) {
-            tvName = (TextView) item.findViewById(R.id.ratingComment);
+            tvRating = (RatingBar) item.findViewById(R.id.listItemRatingBar);
+            tvComment = (TextView) item.findViewById(R.id.listItemRatingComment);
+            tvAuthor = (TextView) item.findViewById(R.id.listItemRatingAuthor);
         }
     }
 

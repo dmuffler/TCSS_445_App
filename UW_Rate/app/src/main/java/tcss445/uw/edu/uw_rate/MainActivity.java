@@ -1,5 +1,6 @@
 package tcss445.uw.edu.uw_rate;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         LoginFragment.LoginFragmentInteractionListener,
@@ -22,6 +25,8 @@ public class MainActivity extends AppCompatActivity
         InstructorFragment.InstructorFragmentInteractionListener {
 
     private String sessionId;
+    public static final String SESSION_PREFERENCES = "SESSION_PREFERENCES";
+    public static final String SESSION = "SESSION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,17 +158,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRatingChanged(Rating rating) {
-        // TODO: Create/Update rating in async task
+    public void onRatingChanged(Rating rating, API.Listener<RatingResult[]> listener) {
+        API.APITask<RatingResult[]> task = new API.APITask<RatingResult[]>(this,
+            listener,
+            "rating",
+            RatingResult[].class,
+            "verb","instructor_email","score", "hotness", "comment");
+        task.execute("CREATE_OR_UPDATE",
+            rating.getInstructorId(),
+            String.valueOf(rating.getScore()),
+            String.valueOf(rating.getHotness()),
+            rating.getComment());
     }
 
     @Override
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    @Override
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public void storeSession(Session session) {
+        SharedPreferences preferences = getSharedPreferences(SESSION_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(SESSION, new Gson().toJson(session));
+        editor.commit();
     }
 }
