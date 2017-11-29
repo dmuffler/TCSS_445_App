@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="username_string">Username</string>
+    <string name="uw_email_string">UW Email</string>
     <string name="password_string">Password</string>
     <string name="student_string">Student</string>
     <string name="admin_string">Admin</string>
