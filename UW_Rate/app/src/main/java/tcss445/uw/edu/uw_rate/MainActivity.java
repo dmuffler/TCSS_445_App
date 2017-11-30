@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity
 
                 //TODO need to check if admin here
 
-                //switchFrag(new SearchFragment(), theFragString);
-                switchFrag(new SearchFragmentAdmin(), theFragString);
+                switchFrag(new SearchFragment(), theFragString);
+                //switchFrag(new SearchFragmentAdmin(), theFragString);
                 break;
         }
     }
