@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS Instructor (
 );
 
 CREATE TABLE IF NOT EXISTS Rating (
-  instructor_email VARCHAR(50)
-  , student_email VARCHAR(50)
+  instructor_email VARCHAR(50) NOT NULL
+  , student_email VARCHAR(50) NOT NULL
   , score INT CHECK (score > 0 AND score <= 5)
   , hotness INT CHECK (hotness > 0 AND hotness <= 5)
   , comment VARCHAR(512) NOT NULL

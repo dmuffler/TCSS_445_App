@@ -66,4 +66,8 @@ public class Rating {
     public Object getHotness() {
         return hotness;
     }
+
+    public void setInstructorId(String instructorId) {
+        this.instructorId = instructorId;
+    }
 }
