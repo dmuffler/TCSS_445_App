@@ -63,6 +63,7 @@ public class InstructorFragment extends Fragment {
 
         final EditText editTextReview = (EditText) view.findViewById(R.id.editTextReview);
         final RatingBar ratingBar = (RatingBar) view.findViewById(R.id.editRating);
+        final RatingBar hotnessRatingBar = (RatingBar) view.findViewById(R.id.editEggplantRating);
         Button submitReview = (Button) view.findViewById(R.id.submitRatingButton);
         final API.Listener<RatingResult[]> ratingChangedCallback = new API.Listener<RatingResult[]>() {
             @Override
@@ -81,15 +82,19 @@ public class InstructorFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 int ratingScore = Math.round(ratingBar.getRating());
+                int hotnessScore = Math.round(hotnessRatingBar.getRating());
                 String reviewText = editTextReview.getText().toString();
                 if (ratingScore <= 0 || ratingScore > 5) {
                     Toast.makeText(getContext(), "You must select a rating score.", Toast.LENGTH_SHORT).show();
+                } else if(hotnessScore <= 0 || hotnessScore > 5) {
+                    Toast.makeText(getContext(), "You must select how many eggplants you would give.", Toast.LENGTH_SHORT).show();
                 } else if(reviewText.length() == 0) {
                     Toast.makeText(getContext(), "You must write a review.", Toast.LENGTH_SHORT).show();
                 } else {
                     rating = new Rating(mInstructor.getEmail(), 0, 0, null);
                     rating.setInstructorId(mInstructor.getEmail());
                     rating.setScore(ratingScore);
+                    rating.setHotness(hotnessScore);
                     rating.setComment(reviewText);
                     mListener.onRatingChanged(rating, ratingChangedCallback);
                 }

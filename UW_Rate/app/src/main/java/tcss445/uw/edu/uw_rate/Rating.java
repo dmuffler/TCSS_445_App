@@ -63,11 +63,15 @@ public class Rating {
         return rating;
     }
 
-    public Object getHotness() {
+    public int getHotness() {
         return hotness;
     }
 
     public void setInstructorId(String instructorId) {
         this.instructorId = instructorId;
+    }
+
+    public void setHotness(int hotness) {
+        this.hotness = hotness;
     }
 }
