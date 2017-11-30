@@ -7,28 +7,73 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RatingBar
-        android:id="@+id/listItemRatingBar"
-        style="@style/Widget.AppCompat.RatingBar.Small"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="5"
-        android:rating="0"
-        android:stepSize="1"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/listItemRatingComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/example_comment_string"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="24dp" />
+        <RatingBar
+            android:id="@+id/listItemRatingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1" />
 
-    <TextView
-        android:id="@+id/listItemRatingAuthor"
+        <RatingBar
+            android:id="@+id/listItemEggplantBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:progressDrawable="@drawable/eggplant_small_style"
+            android:numStars="5"
+            android:stepSize="1" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AuthorFirstName AuthorLastName" />
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/left_quote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_quote_left" />
+
+            <TextView
+                android:id="@+id/listItemRatingComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_toEndOf="@id/left_quote"
+                android:layout_toStartOf="@+id/right_quote"
+                android:text="@string/example_comment_string"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="24dp" />
+
+            <TextView
+                android:id="@+id/listItemRatingAuthor"
+                android:layout_toEndOf="@id/left_quote"
+                android:layout_below="@id/listItemRatingComment"
+                android:layout_toStartOf="@id/right_quote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="AuthorFirstName AuthorLastName"
+                android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/right_quote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitEnd"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/listItemRatingComment"
+            android:src="@drawable/ic_quote_right" />
+    </RelativeLayout>
+
 </LinearLayout>
