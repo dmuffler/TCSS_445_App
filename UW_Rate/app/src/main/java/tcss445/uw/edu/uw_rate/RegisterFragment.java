@@ -65,14 +65,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         mStudentRadio = (RadioButton) v.findViewById(R.id.studentRadioRegisterButton);
         mAdminRadio = (RadioButton) v.findViewById(R.id.adminRadioRegisterButton);
 
-/*        int booKey = getArguments().getInt(getString(R.string.boo_key));
-
-        if (booKey == 0) {
-            mStudentRadio.setChecked(true);
-        } else {
-            mAdminRadio.setChecked(true);
-        }*/
-
         Button register = (Button) v.findViewById(R.id.registerButton);
         register.setOnClickListener(this);
         
@@ -104,22 +96,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             } else {
                 mControl = 1;
             }
-            // TODO: implement password hashing client side. Most of it is done below.
-            /*try {
-                MessageDigest md = MessageDigest.getInstance("SHA-1");
-                md.update(mPassword.getText().toString().getBytes());
-                String pass = new String(md.digest());*/
-                AsyncTask<String, Void, String> task = new LoginTask();
-                task.execute(
-                        String.valueOf(mControl),
-                        mUsername.getText().toString(),
-                        mPassword.getText().toString(),
-                        mFirstName.getText().toString(),
-                        mLastName.getText().toString(),
-                        mGender.getText().toString());
-/*            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }*/
+            AsyncTask<String, Void, String> task = new LoginTask();
+            task.execute(
+                    String.valueOf(mControl),
+                    mUsername.getText().toString(),
+                    mPassword.getText().toString(),
+                    mFirstName.getText().toString(),
+                    mLastName.getText().toString(),
+                    mGender.getText().toString());
         }
     }
 
@@ -148,7 +132,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         @Override
         protected String doInBackground(String... strings) {
-            if (strings.length != 7) {
+            if (strings.length != 6) {
                 throw new IllegalArgumentException("URL, email, password strings required.");
             }
             String response = "";
