@@ -5,17 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-
-import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 class RatingListAdapter extends BaseAdapter {
 
@@ -61,20 +55,23 @@ class RatingListAdapter extends BaseAdapter {
 
         Rating rating = getItem(i);
 
+        mViewHolder.rbRating.setRating(rating.getScore());
+        mViewHolder.rbEggplant.setRating(rating.getHotness());
         mViewHolder.tvComment.setText(rating.getComment());
-        mViewHolder.tvRating.setRating(rating.getScore());
         mViewHolder.tvAuthor.setText(rating.getAuthorFullName());
 
         return view;
     }
 
     private class RatingViewHolder {
-        RatingBar tvRating;
+        RatingBar rbRating;
+        RatingBar rbEggplant;
         TextView tvComment;
         TextView tvAuthor;
 
         public RatingViewHolder(View item) {
-            tvRating = (RatingBar) item.findViewById(R.id.listItemRatingBar);
+            rbRating = (RatingBar) item.findViewById(R.id.listItemRatingBar);
+            rbEggplant = (RatingBar) item.findViewById(R.id.listItemEggplantBar);
             tvComment = (TextView) item.findViewById(R.id.listItemRatingComment);
             tvAuthor = (TextView) item.findViewById(R.id.listItemRatingAuthor);
         }
