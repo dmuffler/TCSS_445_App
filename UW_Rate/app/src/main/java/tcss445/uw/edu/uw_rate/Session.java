@@ -4,7 +4,7 @@ package tcss445.uw.edu.uw_rate;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class Session implements Parcelable {
+public class Session implements Parcelable {
     private final String sessionId;
     private final String email;
     private final String firstName;

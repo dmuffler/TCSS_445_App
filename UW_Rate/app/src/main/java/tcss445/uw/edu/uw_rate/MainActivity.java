@@ -19,6 +19,8 @@ import android.view.MenuItem;
 
 import com.google.gson.Gson;
 
+import tcss445.uw.edu.uw_rate.API.API;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         LoginFragment.LoginFragmentInteractionListener,

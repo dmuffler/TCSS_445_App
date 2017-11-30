@@ -1,4 +1,4 @@
-package tcss445.uw.edu.uw_rate;
+package tcss445.uw.edu.uw_rate.API;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,8 +12,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+
+import tcss445.uw.edu.uw_rate.MainActivity;
+import tcss445.uw.edu.uw_rate.Session;
 
 /**
  * Created by asms on 11/29/17.
