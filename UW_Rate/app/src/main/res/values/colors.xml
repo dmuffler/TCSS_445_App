@@ -8,4 +8,12 @@
     <color name="rating3">#C4CC3D</color>
     <color name="rating2">#E88B15</color>
     <color name="rating1">#F46411</color>
+
+    <color name="uw_purple_color">#4B2E83</color>
+    <color name="uw_gold_color">#b7a57a</color>
+    <color name="uw_metallic_gold_color">#85754d</color>
+    <color name="uw_light_gray_color">#d9d9d9</color>
+    <color name="uw_white_color">#ffffff</color>
+    <color name="uw_black_color">#000000</color>
+    <color name="uw_dark_gray_color">#444444</color>
 </resources>
