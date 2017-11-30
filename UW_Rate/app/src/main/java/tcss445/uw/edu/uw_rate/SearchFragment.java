@@ -50,7 +50,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         professorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mListener.onInstructorSelected(mInstructors.get(i), "InstructorFragment");
+                mListener.onInstructorSelected(mListAdapter.getItem(i), "InstructorFragment");
             }
         });
 
