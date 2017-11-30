@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -81,9 +82,15 @@ public class InstructorFragment extends Fragment {
             public void onClick(View view) {
                 int ratingScore = Math.round(ratingBar.getRating());
                 String reviewText = editTextReview.getText().toString();
-                rating.setScore(ratingScore);
-                rating.setComment(reviewText);
-                mListener.onRatingChanged(rating, ratingChangedCallback);
+                if (ratingScore <= 0 || ratingScore > 5) {
+                    Toast.makeText(getContext(), "You must select a rating score.", Toast.LENGTH_SHORT).show();
+                } else if(reviewText.length() == 0) {
+                    Toast.makeText(getContext(), "You must write a review.", Toast.LENGTH_SHORT).show();
+                } else {
+                    rating.setScore(ratingScore);
+                    rating.setComment(reviewText);
+                    mListener.onRatingChanged(rating, ratingChangedCallback);
+                }
             }
         };
 
@@ -135,7 +142,7 @@ public class InstructorFragment extends Fragment {
                 int[] numRatings = new int[5];
                 int[] ratingRatio = new int[5];
                 for (Rating rating : ratings) {
-                    numRatings[rating.getScore()-1]++;
+                    numRatings[rating.getScore() - 1]++;
                     totalRatings++;
                 }
                 for (int i = 0; i < numRatings.length; i++) {
