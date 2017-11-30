@@ -8,4 +8,5 @@ public class LoginResult {
     public String first_name;
     public String last_name;
     public String sid;
+    public String is_admin;
 }

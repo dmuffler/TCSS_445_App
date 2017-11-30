@@ -1,5 +1,6 @@
 package tcss445.uw.edu.uw_rate;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -122,9 +123,17 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "SearchFrag":
 
-                //TODO need to check if admin here
+                SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                String is_admin = sharedPref.getString("is_admin", "null");
+                //Log.e("InMainActivity", is_admin);
+                
+                if (Integer.parseInt(is_admin) == 1) {
+                    switchFrag(new SearchFragmentAdmin(), theFragString);
+                } else if (Integer.parseInt(is_admin) == 0) {
+                    switchFrag(new SearchFragment(), theFragString);
+                }
 
-                switchFrag(new SearchFragment(), theFragString);
+                //switchFrag(new SearchFragment(), theFragString);
                 //switchFrag(new SearchFragmentAdmin(), theFragString);
                 break;
         }
