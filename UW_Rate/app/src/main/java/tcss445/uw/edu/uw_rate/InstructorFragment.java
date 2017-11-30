@@ -87,6 +87,8 @@ public class InstructorFragment extends Fragment {
                 } else if(reviewText.length() == 0) {
                     Toast.makeText(getContext(), "You must write a review.", Toast.LENGTH_SHORT).show();
                 } else {
+                    rating = new Rating(mInstructor.getEmail(), 0, 0, null);
+                    rating.setInstructorId(mInstructor.getEmail());
                     rating.setScore(ratingScore);
                     rating.setComment(reviewText);
                     mListener.onRatingChanged(rating, ratingChangedCallback);
@@ -103,7 +105,7 @@ public class InstructorFragment extends Fragment {
         mInstructorChangedListener = new InstructorChangedListener() {
             @Override
             public void onInstructorChanged(Instructor instructor) {
-                if (instructor == null) {
+                if (instructor != null) {
                     mInstructor = instructor;
                 }
                 if (mInstructor != null && instructorNameLabel != null) {
@@ -185,7 +187,6 @@ public class InstructorFragment extends Fragment {
             } else if(instructor != null) {
                 mInstructor = instructor;
             }
-            rating = new Rating(mInstructor.getEmail(), 0, 0, null);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
