@@ -60,16 +60,23 @@ class InstructorListAdapter extends BaseAdapter implements Filterable {
 
         Instructor instructor = getItem(i);
 
-        mViewHolder.tvName.setText(instructor.getFullName());
+        mViewHolder.tvFullName.setText(instructor.getFullName());
+        mViewHolder.tvPositionTitle.setText(instructor.getPositionTitle());
+        mViewHolder.tvDepartmentName.setText(instructor.getDepartmentName());
 
         return view;
     }
 
     private class InstructorViewHolder {
-        TextView tvName;
+        TextView tvFullName;
+        TextView tvPositionTitle;
+        TextView tvDepartmentName;
+
 
         public InstructorViewHolder(View item) {
-            tvName = (TextView) item.findViewById(R.id.instructorName);
+            tvFullName = (TextView) item.findViewById(R.id.instructorName);
+            tvPositionTitle = (TextView) item.findViewById(R.id.instructorPositionTitle);
+            tvDepartmentName = (TextView) item.findViewById(R.id.instructorDepartmentName);
         }
     }
 
