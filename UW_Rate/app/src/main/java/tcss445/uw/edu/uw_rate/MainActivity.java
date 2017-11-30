@@ -1,6 +1,7 @@
 package tcss445.uw.edu.uw_rate;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,9 @@ public class MainActivity extends AppCompatActivity
         LoginFragment.LoginFragmentInteractionListener,
         RegisterFragment.RegisterFragmentInteractionListener,
         SearchFragment.SearchFragmentInteractionListener,
-        InstructorFragment.InstructorFragmentInteractionListener {
+        InstructorFragment.InstructorFragmentInteractionListener,
+        SearchFragmentAdmin.SearchFragmentAdminInteractionListener,
+        AddInstructorFragment.OnFragmentInteractionListener {
 
     private String sessionId;
     public static final String SESSION_PREFERENCES = "SESSION_PREFERENCES";
@@ -117,7 +120,8 @@ public class MainActivity extends AppCompatActivity
                 switchFrag(frag, theFragString);
                 break;
             case "SearchFrag":
-                switchFrag(new SearchFragment(), theFragString);
+                //switchFrag(new SearchFragment(), theFragString);
+                switchFrag(new SearchFragmentAdmin(), theFragString);
                 break;
         }
     }
@@ -137,7 +141,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onAddInstructor(String theFragString) {
+        switch (theFragString) {
+            case "AddInstructionFrag":
+                Fragment frag = new AddInstructorFragment();
+                switchFrag(frag, theFragString);
+                break;
+        }
+    }
+
+    @Override
     public void onInstructorSelected(Instructor instructor, String theFragString) {
+
         Bundle bundle = new Bundle();
         bundle.putParcelable(Instructor.class.getName(), instructor);
         Fragment frag = new InstructorFragment();
@@ -177,5 +192,10 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(SESSION, new Gson().toJson(session));
         editor.commit();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
