@@ -139,9 +139,10 @@
 
         <RatingBar
             android:id="@+id/rating5"
-            style="@style/Widget.AppCompat.RatingBar.Small"
+            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ratingProgress5"
             android:layout_alignParentStart="true"
             android:numStars="5"
             android:rating="5"
@@ -238,6 +239,18 @@
             android:isIndicator="false"
             android:numStars="5"
             android:rating="0"
+            android:stepSize="1" />
+
+        <RatingBar
+            android:id="@+id/editEggplantRating"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:rating="0"
+            android:progressDrawable="@drawable/eggplant_medium_style"
             android:stepSize="1" />
 
         <EditText
