@@ -12,7 +12,7 @@ $read_statement = 'SELECT Rating.*, Student.first_name AS author_first_name, Stu
                    WHERE instructor_email = ? AND student_email = ?';
 $read_all_statement = 'SELECT Rating.*, Student.first_name AS author_first_name, Student.last_name AS author_last_name
                        FROM Rating
-                       JOIN Student
+                       JOIN Student ON Rating.student_email = Student.email
                        WHERE instructor_email = ?';
 $create_or_update_statement = 'REPLACE INTO Rating SET score = ?, hotness = ?, comment = ?, date = NOW(), instructor_email = ?, student_email = ?';
 $delete_statement = 'DELETE FROM Rating WHERE instructor_email = ? AND student_email = ?';
