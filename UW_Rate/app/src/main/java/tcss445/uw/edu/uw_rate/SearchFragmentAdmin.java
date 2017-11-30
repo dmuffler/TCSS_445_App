@@ -51,7 +51,8 @@ public class SearchFragmentAdmin extends Fragment implements SearchView.OnQueryT
         professorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mListener.onInstructorSelected(mListAdapter.getItem(i), "InstructorFragment");
+                Log.d("here", "hrere");
+                mListener.onInstructorSelectedAdmin(mListAdapter.getItem(i), "InstructorAdminFragment");
             }
         });
 
@@ -114,7 +115,7 @@ public class SearchFragmentAdmin extends Fragment implements SearchView.OnQueryT
         // TODO: Update argument type and name
         void onFragmentInteraction(String theFragString);
         void onAddInstructor(String theFragString);
-        void onInstructorSelected(Instructor instructor, String theFragString);
+        void onInstructorSelectedAdmin(Instructor instructor, String theFragString);
     }
 
     private class GetInstructorsTask extends AsyncTask<String, Void, String> {

@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity
         SearchFragment.SearchFragmentInteractionListener,
         InstructorFragment.InstructorFragmentInteractionListener,
         SearchFragmentAdmin.SearchFragmentAdminInteractionListener,
-        AddInstructorFragment.OnFragmentInteractionListener {
+        AddInstructorFragment.OnFragmentInteractionListener,
+        InstructorFragmentAdmin.InstructorFragmentAdminInteractionListener {
 
     private String sessionId;
     public static final String SESSION_PREFERENCES = "SESSION_PREFERENCES";
@@ -120,6 +121,9 @@ public class MainActivity extends AppCompatActivity
                 switchFrag(frag, theFragString);
                 break;
             case "SearchFrag":
+
+                //TODO need to check if admin here
+
                 //switchFrag(new SearchFragment(), theFragString);
                 switchFrag(new SearchFragmentAdmin(), theFragString);
                 break;
@@ -151,6 +155,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onInstructorSelectedAdmin(Instructor instructor, String theFragString) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Instructor.class.getName(), instructor);
+        Fragment frag = new InstructorFragmentAdmin();
+        frag.setArguments(bundle);
+        switchFrag(frag, theFragString);
+    }
+
+    @Override
     public void onInstructorSelected(Instructor instructor, String theFragString) {
 
         Bundle bundle = new Bundle();
@@ -170,6 +183,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void instructorFragmentInteraction(String theFragString) {
         Log.d("instructor", "inside instructorfragmentinteraction");
+    }
+
+    @Override
+    public void onProfessorDelete(String theFragString) {
+
     }
 
     @Override
