@@ -22,6 +22,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import tcss445.uw.edu.uw_rate.API.API;
+
 
 /**
  * A simple {@link Fragment} subclass.

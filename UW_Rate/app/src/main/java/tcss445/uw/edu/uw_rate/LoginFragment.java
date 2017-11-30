@@ -1,5 +1,6 @@
 package tcss445.uw.edu.uw_rate;
 
+import android.content.SharedPreferences;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
