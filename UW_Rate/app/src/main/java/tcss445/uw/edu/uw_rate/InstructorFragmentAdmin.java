@@ -105,7 +105,7 @@ public class InstructorFragmentAdmin extends Fragment {
         mInstructorChangedListener = new InstructorChangedListener() {
             @Override
             public void onInstructorChanged(Instructor instructor) {
-                if (instructor == null) {
+                if (instructor != null) {
                     mInstructor = instructor;
                 }
                 if (mInstructor != null && instructorNameLabel != null) {
@@ -187,7 +187,6 @@ public class InstructorFragmentAdmin extends Fragment {
             } else if(instructor != null) {
                 mInstructor = instructor;
             }
-            rating = new Rating(mInstructor.getEmail(), 0, 0, null);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
