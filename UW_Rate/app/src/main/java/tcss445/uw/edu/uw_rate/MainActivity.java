@@ -125,8 +125,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void registerFragmentInteraction(String theFragString) {
         switch (theFragString) {
-            case "SearchFrag":
-                switchFrag(new SearchFragment(), theFragString);
+            case "LoginFrag":
+                getSupportFragmentManager().popBackStackImmediate();
                 break;
         }
     }
