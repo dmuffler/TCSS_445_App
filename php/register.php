@@ -14,7 +14,6 @@ $email = $_GET['my_email'];
 $pass = $_GET['my_pass'];
 $first_name = $_GET['my_first_name'];
 $last_name = $_GET['my_last_name'];
-$gender = $_GET['my_gender'];
 $account_check;
 $account_add;
 
@@ -43,7 +42,7 @@ try {
     } else {
         // user does not exist
         if ($control == 0) {
-            $account_add = "INSERT INTO Student VALUES ('$email', SHA('$pass'), '$first_name', '$last_name', '$gender')";
+            $account_add = "INSERT INTO Student VALUES ('$email', SHA('$pass'), '$first_name', '$last_name')";
         } else {
             $account_add = "INSERT INTO Admin VALUES ('$email', SHA('$pass'), '$first_name', '$last_name')";
         }
