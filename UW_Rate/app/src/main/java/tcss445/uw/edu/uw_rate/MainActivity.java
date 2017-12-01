@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void registerFragmentInteraction(String theFragString, String theUser, String thePass) {
+    public void registerFragmentInteraction(String theFragString) {
         switch (theFragString) {
             case "LoginFrag":
                 getSupportFragmentManager().popBackStackImmediate();

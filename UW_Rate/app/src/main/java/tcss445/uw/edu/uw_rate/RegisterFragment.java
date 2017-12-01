@@ -121,7 +121,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
      */
     public interface RegisterFragmentInteractionListener {
         // TODO: Update argument type and name
-        void registerFragmentInteraction(String theFragString, String theUser, String thePass);
+        void registerFragmentInteraction(String theFragString);
     }
 
     /**
@@ -184,7 +184,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 editor.putString(getString(R.string.username), mUsername.getText().toString());
                 editor.putString(getString(R.string.password), mPassword.getText().toString());
                 editor.commit();
-                mListener.registerFragmentInteraction("LoginFrag", mUsername.getText().toString(), mPassword.getText().toString());
+                mListener.registerFragmentInteraction("LoginFrag");
             }
         }
     }

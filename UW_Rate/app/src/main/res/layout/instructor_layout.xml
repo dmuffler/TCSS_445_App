@@ -1,257 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/instructorInfoGroup"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/uw_white_color"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <TextView
-            android:id="@+id/instructorName"
+        <LinearLayout
+            android:id="@+id/ratingEditorGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:fontFamily="sans-serif"
-            android:text="FirstName LastName"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/uw_metallic_gold_color"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:typeface="normal" />
+            android:layout_height="match_parent"
+            android:layout_weight="0.99"
+            android:background="@color/uw_white_color"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/positionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/instructorName"
-            android:text="Position Title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            <LinearLayout
+                android:id="@+id/instructorInfoGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/uw_white_color"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
 
-        <TextView
-            android:id="@+id/departmentName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/positionTitle"
-            android:text="Department Name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                <TextView
+                    android:id="@+id/instructorName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:fontFamily="sans-serif"
+                    android:text="FirstName LastName"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/uw_metallic_gold_color"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:typeface="normal" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/positionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/instructorName"
+                    android:text="Position Title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <RelativeLayout
-        android:id="@+id/ratingInfoGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:background="@color/uw_light_gray_color">
+                <TextView
+                    android:id="@+id/departmentName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/positionTitle"
+                    android:text="Department Name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-        <ProgressBar
-            android:id="@+id/ratingProgress5"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/rating5"
-            android:layout_toStartOf="@+id/numRating4"
-            android:max="100"
-            android:progress="0"
-            android:progressTint="@color/rating5" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/numRating2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/ratingProgress1"
-            android:layout_toEndOf="@+id/ratingProgress3"
-            android:text="0" />
+            <RelativeLayout
+                android:id="@+id/ratingInfoGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.99"
+                android:background="@color/uw_light_gray_color"
+                android:padding="@dimen/activity_horizontal_margin">
 
-        <RatingBar
-            android:id="@+id/rating2"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/rating3"
-            android:numStars="5"
-            android:rating="2"
-            android:stepSize="1" />
+                <ProgressBar
+                    android:id="@+id/ratingProgress5"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/rating5"
+                    android:layout_toStartOf="@+id/numRating4"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressTint="@color/rating5" />
 
-        <ProgressBar
-            android:id="@+id/ratingProgress4"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/rating3"
-            android:layout_below="@+id/rating5"
-            android:layout_toEndOf="@+id/rating4"
-            android:layout_toStartOf="@+id/numRating3"
-            android:max="100"
-            android:progress="0"
-            android:progressTint="@color/rating4" />
+                <TextView
+                    android:id="@+id/numRating2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ratingProgress1"
+                    android:layout_toEndOf="@+id/ratingProgress3"
+                    android:text="0" />
 
-        <TextView
-            android:id="@+id/numRating1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/ratingProgress1"
-            android:layout_toEndOf="@+id/ratingProgress2"
-            android:text="0" />
+                <RatingBar
+                    android:id="@+id/rating2"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/rating3"
+                    android:numStars="5"
+                    android:rating="2"
+                    android:stepSize="1" />
 
-        <ProgressBar
-            android:id="@+id/ratingProgress3"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/ratingProgress2"
-            android:layout_below="@+id/rating4"
-            android:layout_toEndOf="@+id/rating3"
-            android:max="100"
-            android:progress="0"
-            android:progressTint="@color/rating3" />
+                <ProgressBar
+                    android:id="@+id/ratingProgress4"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/rating3"
+                    android:layout_below="@+id/rating5"
+                    android:layout_toEndOf="@+id/rating4"
+                    android:layout_toStartOf="@+id/numRating3"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressTint="@color/rating4" />
 
-        <ProgressBar
-            android:id="@+id/ratingProgress1"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ratingProgress2"
-            android:layout_toEndOf="@+id/rating1"
-            android:layout_toStartOf="@+id/numRating1"
-            android:max="100"
-            android:progress="0"
-            android:progressTint="@color/rating1" />
+                <TextView
+                    android:id="@+id/numRating1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/ratingProgress1"
+                    android:layout_toEndOf="@+id/ratingProgress2"
+                    android:text="0" />
 
-        <TextView
-            android:id="@+id/numRating5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/ratingProgress4"
-            android:layout_alignTop="@+id/ratingProgress5"
-            android:layout_toEndOf="@+id/ratingProgress5"
-            android:text="0" />
+                <ProgressBar
+                    android:id="@+id/ratingProgress3"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/ratingProgress2"
+                    android:layout_below="@+id/rating4"
+                    android:layout_toEndOf="@+id/rating3"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressTint="@color/rating3" />
 
-        <RatingBar
-            android:id="@+id/rating5"
-            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/ratingProgress5"
-            android:layout_alignParentStart="true"
-            android:numStars="5"
-            android:rating="5"
-            android:stepSize="1" />
+                <ProgressBar
+                    android:id="@+id/ratingProgress1"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ratingProgress2"
+                    android:layout_toEndOf="@+id/rating1"
+                    android:layout_toStartOf="@+id/numRating1"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressTint="@color/rating1" />
 
-        <TextView
-            android:id="@+id/numRating4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/ratingProgress3"
-            android:layout_below="@+id/numRating5"
-            android:layout_toEndOf="@+id/ratingProgress4"
-            android:text="0" />
+                <TextView
+                    android:id="@+id/numRating5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ratingProgress4"
+                    android:layout_alignTop="@+id/ratingProgress5"
+                    android:layout_toEndOf="@+id/ratingProgress5"
+                    android:text="0" />
 
-        <TextView
-            android:id="@+id/numRating3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/ratingProgress2"
-            android:layout_below="@+id/numRating4"
-            android:layout_toEndOf="@+id/ratingProgress3"
-            android:text="0" />
+                <RatingBar
+                    android:id="@+id/rating5"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/ratingProgress5"
+                    android:layout_alignParentStart="true"
+                    android:numStars="5"
+                    android:rating="5"
+                    android:stepSize="1" />
 
-        <RatingBar
-            android:id="@+id/rating1"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/rating2"
-            android:numStars="5"
-            android:rating="1"
-            android:stepSize="1" />
+                <TextView
+                    android:id="@+id/numRating4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ratingProgress3"
+                    android:layout_below="@+id/numRating5"
+                    android:layout_toEndOf="@+id/ratingProgress4"
+                    android:text="0" />
 
-        <RatingBar
-            android:id="@+id/rating4"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/rating5"
-            android:numStars="5"
-            android:rating="4"
-            android:stepSize="1" />
+                <TextView
+                    android:id="@+id/numRating3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ratingProgress2"
+                    android:layout_below="@+id/numRating4"
+                    android:layout_toEndOf="@+id/ratingProgress3"
+                    android:text="0" />
 
-        <ProgressBar
-            android:id="@+id/ratingProgress2"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/rating1"
-            android:layout_below="@+id/rating3"
-            android:layout_toEndOf="@+id/rating1"
-            android:max="100"
-            android:progress="0"
-            android:progressTint="@color/rating2" />
+                <RatingBar
+                    android:id="@+id/rating1"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/rating2"
+                    android:numStars="5"
+                    android:rating="1"
+                    android:stepSize="1" />
 
-        <RatingBar
-            android:id="@+id/rating3"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/rating4"
-            android:numStars="5"
-            android:rating="3"
-            android:stepSize="1" />
-    </RelativeLayout>
+                <RatingBar
+                    android:id="@+id/rating4"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/rating5"
+                    android:numStars="5"
+                    android:rating="4"
+                    android:stepSize="1" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:background="@color/uw_white_color"
-        android:textColor="@color/uw_black_color"
-        android:text="Rate this instructor"
-        android:padding="@dimen/fab_margin"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                <ProgressBar
+                    android:id="@+id/ratingProgress2"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/rating1"
+                    android:layout_below="@+id/rating3"
+                    android:layout_toEndOf="@+id/rating1"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressTint="@color/rating2" />
 
-    <LinearLayout
-        android:id="@+id/ratingEditorGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/uw_white_color"
-        android:orientation="vertical">
+                <RatingBar
+                    android:id="@+id/rating3"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/rating4"
+                    android:numStars="5"
+                    android:rating="3"
+                    android:stepSize="1" />
+            </RelativeLayout>
 
-        <RatingBar
-            android:id="@+id/editRating"
-            style="@style/Widget.AppCompat.RatingBar.Indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:isIndicator="false"
-            android:numStars="5"
-            android:rating="0"
-            android:stepSize="1" />
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/ratingEditorGroup"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="Reviews"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-        <RatingBar
-            android:id="@+id/editEggplantRating"
-            style="@style/Widget.AppCompat.RatingBar.Indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:isIndicator="false"
-            android:numStars="5"
-            android:rating="0"
-            android:progressDrawable="@drawable/eggplant_medium_style"
-            android:stepSize="1" />
+            <ListView
+                android:id="@+id/instructorReviewList"
+                android:layout_width="match_parent"
+                android:layout_height="258dp" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/uw_white_color"
+                android:padding="@dimen/fab_margin"
+                android:text="Rate this instructor"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/uw_black_color" />
+
+            <RatingBar
+                android:id="@+id/editRating"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="1" />
+
+            <RatingBar
+                android:id="@+id/editEggplantRating"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:progressDrawable="@drawable/eggplant_medium_style"
+                android:rating="0"
+                android:stepSize="1" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/editTextReview"
@@ -271,23 +298,6 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/uw_purple_color"
             android:text="Submit Rating" />
+
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/ratingEditorGroup"
-        android:text="Reviews"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <ListView
-        android:id="@+id/instructorReviewList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+</ScrollView>
