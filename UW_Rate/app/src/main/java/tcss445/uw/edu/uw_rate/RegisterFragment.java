@@ -2,6 +2,7 @@ package tcss445.uw.edu.uw_rate;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -140,15 +141,23 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             String response = "";
             HttpURLConnection urlConnection = null;
             String url = API.PATH;
-            String control = "?my_control=" + strings[0];
-            String email = "&my_email=" + strings[1];
-            String password = "&my_pass=" + strings[2];
-            String first_name = "&my_first_name=" + strings[3];
-            String last_name = "&my_last_name=" + strings[4];
+            String control = strings[0];
+            String email = strings[1];
+            String password = strings[2];
+            String first_name = strings[3];
+            String last_name = strings[4];
 
             try {
-                URL urlObject = new URL(url + FILE + control + email + password + first_name +
-                        last_name);
+                Uri uri = Uri.parse(url + FILE)
+                        .buildUpon()
+                        .appendQueryParameter("my_control", control)
+                        .appendQueryParameter("my_email", email)
+                        .appendQueryParameter("my_pass", password)
+                        .appendQueryParameter("my_first_name", first_name)
+                        .appendQueryParameter("my_last_name", last_name)
+                        .build();
+                URL urlObject = new URL(uri.toString());
+                Log.d("URL:", urlObject.toString());
                 urlConnection = (HttpURLConnection) urlObject.openConnection();
 
                 InputStream content = urlConnection.getInputStream();

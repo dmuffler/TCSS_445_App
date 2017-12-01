@@ -18,6 +18,11 @@ $update_and_password_statement = 'UPDATE Student SET
                        last_name = ?
                      WHERE email = ?';
 $delete_statement = 'DELETE FROM Student WHERE email = ?';
+$search_statement = 'SELECT email, first_name, last_name FROM Student
+                     WHERE
+                       first_name LIKE "%"?"%"
+                       OR last_name LIKE "%"?"%"
+                       OR email LIKE "%"?"%"';
 
 /*
  * Returns if the agent is authenticated and an admin, else exits.
@@ -67,9 +72,14 @@ if ($verb == 'READ') {
   $email = $_SESSION['email'];
   $arguments = array($email);
 } else if ($verb == 'READ_ALL') {
-  auth_precheck();
+  admin_auth_precheck();
   $sql_statement = $read_all_statement;
   $arguments = array();
+} else if ($verb == 'SEARCH') {
+  admin_auth_precheck();
+  $query = $_GET['query'];
+  $sql_statement = $search_statement;
+  $arguments = array($query, $query, $query);
 } else if ($verb == 'UPDATE') {
   student_auth_precheck();
   $first_name = $_GET['first_name'];
