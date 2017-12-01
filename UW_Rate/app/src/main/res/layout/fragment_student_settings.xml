@@ -1,0 +1,121 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="tcss445.uw.edu.uw_rate.StudentSettingsFragment"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="Settings"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/uw_metallic_gold_color" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="Email"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <EditText
+                android:id="@+id/studentEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="textEmailAddress"
+                android:text="student@uw.edu" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="Password"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <EditText
+                android:id="@+id/studentPassword"
+                android:layout_width="283dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="First Name"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <EditText
+                android:id="@+id/studentFirstName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="Last Name"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <EditText
+                android:id="@+id/studentLastName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/submitSettings"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/uw_purple_color"
+        android:text="Submit" />
+
+</LinearLayout>
