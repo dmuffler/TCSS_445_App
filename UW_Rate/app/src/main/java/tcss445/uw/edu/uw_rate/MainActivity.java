@@ -1,6 +1,8 @@
 package tcss445.uw.edu.uw_rate;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -24,7 +26,10 @@ public class MainActivity extends AppCompatActivity
         LoginFragment.LoginFragmentInteractionListener,
         RegisterFragment.RegisterFragmentInteractionListener,
         SearchFragment.SearchFragmentInteractionListener,
-        InstructorFragment.InstructorFragmentInteractionListener {
+        InstructorFragment.InstructorFragmentInteractionListener,
+        SearchFragmentAdmin.SearchFragmentAdminInteractionListener,
+        AddInstructorFragment.OnFragmentInteractionListener,
+        InstructorFragmentAdmin.InstructorFragmentAdminInteractionListener {
 
     private String sessionId;
     public static final String SESSION_PREFERENCES = "SESSION_PREFERENCES";
@@ -119,7 +124,19 @@ public class MainActivity extends AppCompatActivity
                 switchFrag(frag, theFragString);
                 break;
             case "SearchFrag":
-                switchFrag(new SearchFragment(), theFragString);
+
+                SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                String is_admin = sharedPref.getString("is_admin", "null");
+                //Log.e("InMainActivity", is_admin);
+                
+                if (Integer.parseInt(is_admin) == 1) {
+                    switchFrag(new SearchFragmentAdmin(), theFragString);
+                } else if (Integer.parseInt(is_admin) == 0) {
+                    switchFrag(new SearchFragment(), theFragString);
+                }
+
+                //switchFrag(new SearchFragment(), theFragString);
+                //switchFrag(new SearchFragmentAdmin(), theFragString);
                 break;
         }
     }
@@ -139,7 +156,27 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onAddInstructor(String theFragString) {
+        switch (theFragString) {
+            case "AddInstructionFrag":
+                Fragment frag = new AddInstructorFragment();
+                switchFrag(frag, theFragString);
+                break;
+        }
+    }
+
+    @Override
+    public void onInstructorSelectedAdmin(Instructor instructor, String theFragString) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Instructor.class.getName(), instructor);
+        Fragment frag = new InstructorFragmentAdmin();
+        frag.setArguments(bundle);
+        switchFrag(frag, theFragString);
+    }
+
+    @Override
     public void onInstructorSelected(Instructor instructor, String theFragString) {
+
         Bundle bundle = new Bundle();
         bundle.putParcelable(Instructor.class.getName(), instructor);
         Fragment frag = new InstructorFragment();
@@ -157,6 +194,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void instructorFragmentInteraction(String theFragString) {
         Log.d("instructor", "inside instructorfragmentinteraction");
+    }
+
+    @Override
+    public void onProfessorDelete(String theFragString) {
+
     }
 
     @Override
@@ -179,5 +221,10 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(SESSION, new Gson().toJson(session));
         editor.commit();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
