@@ -23,15 +23,16 @@ try {
     // user register
     if ($control == 0) {
         #build a SQL statement to query the DB
-        $account_check = "SELECT email FROM Student WHERE email = '$email'";
+        $account_check = "SELECT email FROM Student WHERE email = ?";
     // admin register
     } else {
         #build a SQL statement to query the DB
-        $account_check = "SELECT email FROM Admin WHERE email = '$email'";
+        $account_check = "SELECT email FROM Admin WHERE email = ?";
     }
     
     #make a query object
-    $user_query = $db->query($account_check);
+    $user_query = $db->prepare($account_check);
+    $user_query->execute(array($email));
     
     // run the query on the DB
     $users = $user_query->fetchAll(PDO::FETCH_ASSOC);
@@ -42,13 +43,14 @@ try {
     } else {
         // user does not exist
         if ($control == 0) {
-            $account_add = "INSERT INTO Student VALUES ('$email', SHA('$pass'), '$first_name', '$last_name')";
+            $account_add = "INSERT INTO Student VALUES (?, SHA(?), ?, ?)";
         } else {
-            $account_add = "INSERT INTO Admin VALUES ('$email', SHA('$pass'), '$first_name', '$last_name')";
+            $account_add = "INSERT INTO Admin VALUES (?, SHA(?), ?, ?)";
         }
-        $db->query($account_add);
-        
-        print "true";
+        $arguments = array($email, $pass, $first_name, $last_name);
+        $prepared_statement = $db->prepare($account_add);
+        $result = $prepared_statement->execute($arguments);
+        print ($result ? "true" : "false");
     }
    // echo json_encode($result);
     $db = null;

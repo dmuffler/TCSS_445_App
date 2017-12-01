@@ -2,6 +2,7 @@ package tcss445.uw.edu.uw_rate;
 
 import android.content.SharedPreferences;
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import tcss445.uw.edu.uw_rate.API.API;
 
@@ -152,14 +154,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             String response = "";
             HttpURLConnection urlConnection = null;
             String url = API.PATH;
-            String email = "?email=" + strings[0];
-            String password = "&password=" + strings[1];
+            String email = strings[0];
+            String password = strings[1];
             String result;
 
             try {
-                URL urlObject = new URL(url + FILE + email + password);
-                Log.d("URL:", url + FILE + email + password);
-                urlConnection = (HttpURLConnection) urlObject.openConnection();
+                Uri uri = Uri.parse(url + FILE)
+                        .buildUpon()
+                        .appendQueryParameter("email", email)
+                        .appendQueryParameter("password", password)
+                        .build();
+                Log.d("URL:", uri.toString());
+                urlConnection = (HttpURLConnection) new URL(uri.toString()).openConnection();
 
                 InputStream content = urlConnection.getInputStream();
 

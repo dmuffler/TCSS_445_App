@@ -99,15 +99,15 @@ class StudentListAdapter extends BaseAdapter implements Filterable {
                 ArrayList<Student> filteredList = new ArrayList<Student>();
                 for(Student student: allItems){
                     boolean matches = student.getFullName().toLowerCase().contains(query);
-                    int partialRatio = FuzzySearch.ratio(student.getFullName().toLowerCase(), query);
+                    int partialRatio = FuzzySearch.partialRatio(student.getFullName().toLowerCase(), query);
                     if(matches || partialRatio > 50) { filteredList.add(student); }
                 }
 
                 Collections.sort(filteredList, new Comparator<Student>(){
                     public int compare(Student obj1, Student obj2) {
-                        int partialRatio1 = FuzzySearch.ratio(obj1.getFullName().toLowerCase(), query);
-                        int partialRatio2 = FuzzySearch.ratio(obj2.getFullName().toLowerCase(), query);
-                        return Integer.compare(partialRatio1, partialRatio2);
+                        int partialRatio1 = FuzzySearch.partialRatio(obj1.getFullName().toLowerCase(), query);
+                        int partialRatio2 = FuzzySearch.partialRatio(obj2.getFullName().toLowerCase(), query);
+                        return Integer.compare(partialRatio2, partialRatio1);
                     }
                 });
 

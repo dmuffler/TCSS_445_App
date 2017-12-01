@@ -23,6 +23,7 @@ import tcss445.uw.edu.uw_rate.Session;
 public class API {
     public static final String PATH = "http://cssgate.insttech.washington.edu/~dmuffler/445/";
     //public static final String PATH = "http://10.0.2.2/php/";
+    //public static final String PATH = "http://10.0.0.12/php/";
 
     public interface Listener<T> {
         void onComplete(T results);
