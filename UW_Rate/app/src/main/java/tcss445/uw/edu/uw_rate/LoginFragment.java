@@ -35,6 +35,7 @@ import tcss445.uw.edu.uw_rate.API.API;
  * to handle interaction events.
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
+
     private static final String FAILURE = "FAILURE";
 
     private AsyncTask<String, Integer, String> mTask;
@@ -78,6 +79,25 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SharedPreferences preferences = getActivity().getSharedPreferences(MainActivity.SESSION_PREFERENCES, Context.MODE_PRIVATE);
+        String username = preferences.getString(getString(R.string.username), null);
+        String password = preferences.getString(getString(R.string.password), null);
+
+        if (username != null && password != null) {
+            mUsername.setText(username);
+            mPassword.setText(password);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.remove(getString(R.string.username));
+            editor.remove(getString(R.string.password));
+            editor.commit();
+        }
+    }
+
 
     @Override
     public void onDetach() {

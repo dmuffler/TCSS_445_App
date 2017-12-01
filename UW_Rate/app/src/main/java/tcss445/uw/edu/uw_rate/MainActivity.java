@@ -120,9 +120,7 @@ public class MainActivity extends AppCompatActivity
     public void loginFragmentInteraction(String theFragString) {
         switch (theFragString) {
             case "RegisterFrag":
-                //Bundle bundle = new Bundle();
                 Fragment frag = new RegisterFragment();
-                //frag.setArguments(bundle);
                 switchFrag(frag, theFragString);
                 break;
             case "SearchFrag":
@@ -144,7 +142,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void registerFragmentInteraction(String theFragString) {
+    public void registerFragmentInteraction(String theFragString, String theUser, String thePass) {
         switch (theFragString) {
             case "LoginFrag":
                 getSupportFragmentManager().popBackStackImmediate();

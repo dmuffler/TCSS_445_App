@@ -1,6 +1,7 @@
 package tcss445.uw.edu.uw_rate;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,10 +19,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import tcss445.uw.edu.uw_rate.API.API;
+
 
 
 /**
@@ -31,6 +34,7 @@ import tcss445.uw.edu.uw_rate.API.API;
  * to handle interaction events.
  */
 public class RegisterFragment extends Fragment implements View.OnClickListener {
+
     private static final String FAILURE = "FAILURE";
     private RegisterFragmentInteractionListener mListener;
     private EditText mUsername;
@@ -117,7 +121,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
      */
     public interface RegisterFragmentInteractionListener {
         // TODO: Update argument type and name
-        void registerFragmentInteraction(String theFragString);
+        void registerFragmentInteraction(String theFragString, String theUser, String thePass);
     }
 
     /**
@@ -175,8 +179,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         .show();
                 return;
             } else if (response.equals("true")){
-
-                mListener.registerFragmentInteraction("LoginFrag");
+                SharedPreferences preferences = getActivity().getSharedPreferences(MainActivity.SESSION_PREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString(getString(R.string.username), mUsername.getText().toString());
+                editor.putString(getString(R.string.password), mPassword.getText().toString());
+                editor.commit();
+                mListener.registerFragmentInteraction("LoginFrag", mUsername.getText().toString(), mPassword.getText().toString());
             }
         }
     }
@@ -201,7 +209,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         if (checkString(password, "[a-z]")
                 && checkString(password, "[A-Z]")
                 && checkLength(password, 8)
-                && checkString(password, "[^a-zA-Z0-9]$")) {
+                && checkString(password, "[!@#$%^&*()_+-`~?.>,<;:\'\"]$")) {
             validPass = true;
         } else {
             mPassword.setError("Password must contain an uppercase, lowercase, special character, " +
