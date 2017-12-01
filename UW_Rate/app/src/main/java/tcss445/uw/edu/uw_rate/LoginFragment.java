@@ -1,5 +1,6 @@
 package tcss445.uw.edu.uw_rate;
 
+import android.content.SharedPreferences;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,12 +36,14 @@ import tcss445.uw.edu.uw_rate.API.API;
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
     private static final String FAILURE = "FAILURE";
+
     private AsyncTask<String, Integer, String> mTask;
     private LoginFragmentInteractionListener mListener;
     private EditText mUsername;
     private EditText mPassword;
     private RadioButton mStudentRadio;
     private RadioButton mAdminRadio;
+    private String isAdminResult;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -176,10 +179,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 return;
             } else {
                 LoginResult loginResult = new Gson().fromJson(result, LoginResult.class);
+                isAdminResult = loginResult.is_admin;
+
+                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("is_admin", isAdminResult).commit();
+                //Log.e("inLoginFrag", isAdminResult);
+
                 Session session = new Session(loginResult.sid, loginResult.email,
                         loginResult.first_name, loginResult.last_name);
                 mListener.storeSession(session);
+
                 mListener.loginFragmentInteraction("SearchFrag");
+
             }
         }
     }
