@@ -16,10 +16,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import tcss445.uw.edu.uw_rate.API.API;
+import tcss445.uw.edu.uw_rate.API.DeleteInstructorTask;
 
 public class MainActivity extends AppCompatActivity
         implements /*NavigationView.OnNavigationItemSelectedListener,*/
@@ -169,8 +171,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onProfessorDelete(String theFragString) {
+    public void onInstructorDelete(String instructorEmail) {
+        new DeleteInstructorTask(getApplicationContext(), new API.Listener() {
+            @Override
+            public void onComplete(Object results) {
+                Toast.makeText(getApplicationContext(), "Deleted instructor.", Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onError() {
+                Toast.makeText(getApplicationContext(), "Failed to delete instructor.", Toast.LENGTH_SHORT).show();
+            }
+        }).delete(instructorEmail);
     }
 
     @Override
