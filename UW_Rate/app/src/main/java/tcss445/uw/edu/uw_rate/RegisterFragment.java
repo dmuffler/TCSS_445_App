@@ -60,6 +60,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         Button register = (Button) v.findViewById(R.id.registerButton);
         register.setOnClickListener(this);
+
+
+        mStudentRadio.setChecked(true);
         
         return v;
     }
