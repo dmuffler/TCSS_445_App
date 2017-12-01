@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS Student (
   , password BINARY(40) NOT NULL
   , first_name VARCHAR(25) NOT NULL
   , last_name VARCHAR(25) NOT NULL
-  , gender CHAR NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Admin (

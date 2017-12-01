@@ -50,18 +50,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstNameField" />
 
-        <EditText
-            android:id="@+id/genderField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="@string/last_name_string"
-            android:inputType="textPersonName"
-            app:layout_constraintHorizontal_bias="0.508"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lastNameField" />
 
         <EditText
             android:id="@+id/emailField"
@@ -74,7 +62,7 @@
             app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/genderField" />
+            app:layout_constraintTop_toBottomOf="@+id/lastNameField" />
 
         <Button
             android:id="@+id/registerButton"

@@ -36,7 +36,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private EditText mUsername;
     private EditText mFirstName;
     private EditText mLastName;
-    private EditText mGender;
     private EditText mPassword;
     private RadioButton mStudentRadio;
     private RadioButton mAdminRadio;
@@ -54,7 +53,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         mFirstName = (EditText) v.findViewById(R.id.firstNameField);
         mLastName = (EditText) v.findViewById(R.id.lastNameField);
-        mGender = (EditText) v.findViewById(R.id.genderField);
         mUsername = (EditText) v.findViewById(R.id.emailField);
         mPassword = (EditText) v.findViewById(R.id.passwordRegField);
         mStudentRadio = (RadioButton) v.findViewById(R.id.studentRadioRegisterButton);
@@ -99,8 +97,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         mUsername.getText().toString(),
                         mPassword.getText().toString(),
                         mFirstName.getText().toString(),
-                        mLastName.getText().toString(),
-                        mGender.getText().toString());
+                        mLastName.getText().toString());
             }
         }
     }
@@ -130,7 +127,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         @Override
         protected String doInBackground(String... strings) {
-            if (strings.length != 6) {
+            if (strings.length != 5) {
                 throw new IllegalArgumentException("URL, email, password strings required.");
             }
             String response = "";
@@ -141,11 +138,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             String password = "&my_pass=" + strings[2];
             String first_name = "&my_first_name=" + strings[3];
             String last_name = "&my_last_name=" + strings[4];
-            String gender = "&my_gender=" + strings[5];
 
             try {
                 URL urlObject = new URL(url + FILE + control + email + password + first_name +
-                        last_name + gender);
+                        last_name);
                 urlConnection = (HttpURLConnection) urlObject.openConnection();
 
                 InputStream content = urlConnection.getInputStream();
