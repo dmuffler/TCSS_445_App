@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity
         InstructorFragment.InstructorFragmentInteractionListener,
         SearchFragmentAdmin.SearchFragmentAdminInteractionListener,
         AddInstructorFragment.OnFragmentInteractionListener,
-        InstructorFragmentAdmin.InstructorFragmentAdminInteractionListener {
+        InstructorFragmentAdmin.InstructorFragmentAdminInteractionListener,
+        StudentSettingsFragment.StudentSettingsFragmentInteractionListener {
 
     private String sessionId;
     public static final String SESSION_PREFERENCES = "SESSION_PREFERENCES";
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            switchFrag(new StudentSettingsFragment(), StudentSettingsFragment.class.getName());
             return true;
         }
 
