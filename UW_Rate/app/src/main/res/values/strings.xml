@@ -22,5 +22,7 @@
     <string name="your_review">Your Review</string>
     <string name="submit_review">Submit Review</string>
     <string name="example_comment_string">This is the comment text in the review item. It can be very long. It can be up to 512 characters at the moment. This comment is  only half as long as that, so something needs to be done about word wrapping. Also this has nothing to do with the instructor..</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 
 </resources>
