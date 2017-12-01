@@ -22,7 +22,7 @@ import com.google.gson.Gson;
 import tcss445.uw.edu.uw_rate.API.API;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
+        implements /*NavigationView.OnNavigationItemSelectedListener,*/
         LoginFragment.LoginFragmentInteractionListener,
         RegisterFragment.RegisterFragmentInteractionListener,
         SearchFragment.SearchFragmentInteractionListener,
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity
     private String sessionId;
     public static final String SESSION_PREFERENCES = "SESSION_PREFERENCES";
     public static final String SESSION = "SESSION";
+    private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +44,14 @@ public class MainActivity extends AppCompatActivity
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+/*            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawer.setDrawerListener(toggle);
             toggle.syncState();
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
+            navigationView.setNavigationItemSelectedListener(this);*/
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.main_container,
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                toggleMenuItem(R.id.action_settings, false);
+            }
             super.onBackPressed();
         }
     }
@@ -74,6 +78,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
+        mMenu = menu;
+        toggleMenuItem(R.id.action_settings, false);
         return true;
     }
 
@@ -93,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+/*    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -116,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
+    }*/
 
     @Override
     public void loginFragmentInteraction(String theFragString) {
@@ -136,6 +142,7 @@ public class MainActivity extends AppCompatActivity
                 } else if (Integer.parseInt(is_admin) == 0) {
                     switchFrag(new SearchFragment(), theFragString);
                 }
+                toggleMenuItem(R.id.action_settings, true);
 
                 //switchFrag(new SearchFragment(), theFragString);
                 //switchFrag(new SearchFragmentAdmin(), theFragString);
@@ -229,4 +236,9 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    private void toggleMenuItem(int theOption, boolean theSwitch) {
+        mMenu.findItem(theOption).setEnabled(theSwitch);
+    }
+
 }
