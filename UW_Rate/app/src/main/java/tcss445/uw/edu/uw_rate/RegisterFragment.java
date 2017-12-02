@@ -191,7 +191,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString(getString(R.string.username), mUsername.getText().toString());
                 editor.putString(getString(R.string.password), mPassword.getText().toString());
-                editor.commit();
+                editor.apply();
                 mListener.registerFragmentInteraction("LoginFrag");
             }
         }
