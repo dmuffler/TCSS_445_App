@@ -36,7 +36,6 @@ public class AddInstructorFragment extends Fragment {
         final EditText etPhoneNumber = (EditText) view.findViewById(R.id.instructorPhoneNumber);
         final EditText etPositionTitle = (EditText) view.findViewById(R.id.instructorPositionTitle);
         final EditText etDepartmentName = (EditText) view.findViewById(R.id.instructorDepartmentName);
-        EditText etGender = (EditText) view.findViewById(R.id.instructorGender);
         Button bAddInstructor = (Button) view.findViewById(R.id.addInstructorButton);
 
         bAddInstructor.setOnClickListener(new View.OnClickListener() {

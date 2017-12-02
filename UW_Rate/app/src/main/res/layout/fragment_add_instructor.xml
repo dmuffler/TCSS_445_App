@@ -71,14 +71,6 @@
         android:hint="@string/email_string"
         android:inputType="textEmailAddress" />
 
-    <EditText
-        android:id="@+id/instructorGender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/gender_string"
-        android:inputType="text" />
-
     <Button
         android:id="@+id/addInstructorButton"
         style="@style/Widget.AppCompat.Button.Colored"
