@@ -146,10 +146,7 @@ public class InstructorFragmentAdmin extends Fragment {
     }
 
     public interface InstructorFragmentAdminInteractionListener {
-        void instructorFragmentInteraction(String theFragString);
-        //void onRatingChanged(Rating rating, API.Listener<RatingResult[]> listener);
         void onInstructorDelete(String instructorEmail);
-
     }
 
     public interface InstructorChangedListener {

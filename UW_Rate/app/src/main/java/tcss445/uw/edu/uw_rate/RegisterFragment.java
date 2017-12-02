@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.channels.FileChannel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,9 +55,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_register, container, false);
 
-        mFirstName = (EditText) v.findViewById(R.id.firstNameField);
-        mLastName = (EditText) v.findViewById(R.id.lastNameField);
-        mUsername = (EditText) v.findViewById(R.id.emailField);
+        mFirstName = (EditText) v.findViewById(R.id.instructorEmail);
+        mLastName = (EditText) v.findViewById(R.id.instructorFirstName);
+        mUsername = (EditText) v.findViewById(R.id.instructorGender);
         mPassword = (EditText) v.findViewById(R.id.passwordRegField);
         mStudentRadio = (RadioButton) v.findViewById(R.id.studentRadioRegisterButton);
         mAdminRadio = (RadioButton) v.findViewById(R.id.adminRadioRegisterButton);
