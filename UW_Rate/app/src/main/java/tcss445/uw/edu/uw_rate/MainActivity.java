@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import tcss445.uw.edu.uw_rate.API.API;
+import tcss445.uw.edu.uw_rate.API.CreateInstructorTask;
 import tcss445.uw.edu.uw_rate.API.DeleteInstructorTask;
 
 public class MainActivity extends AppCompatActivity
@@ -210,6 +211,21 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onCreateInstructor(Instructor instructor) {
+        new CreateInstructorTask(getApplicationContext(), new API.Listener() {
+            @Override
+            public void onComplete(Object results) {
+                Toast.makeText(getApplicationContext(), "Instructor created.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(getApplicationContext(), "Failed to create instructor.", Toast.LENGTH_SHORT).show();
+            }
+        }).create(instructor);
     }
 
     private void toggleMenuItem(int theOption, boolean theSwitch) {
