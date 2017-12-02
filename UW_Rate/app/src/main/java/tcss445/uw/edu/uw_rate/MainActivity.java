@@ -16,10 +16,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import tcss445.uw.edu.uw_rate.API.API;
+import tcss445.uw.edu.uw_rate.API.CreateInstructorTask;
+import tcss445.uw.edu.uw_rate.API.DeleteInstructorTask;
 
 public class MainActivity extends AppCompatActivity
         implements /*NavigationView.OnNavigationItemSelectedListener,*/
@@ -30,7 +33,9 @@ public class MainActivity extends AppCompatActivity
         SearchFragmentAdmin.SearchFragmentAdminInteractionListener,
         AddInstructorFragment.OnFragmentInteractionListener,
         InstructorFragmentAdmin.InstructorFragmentAdminInteractionListener,
-        StudentSettingsFragment.StudentSettingsFragmentInteractionListener {
+        StudentSettingsFragment.StudentSettingsFragmentInteractionListener,
+        AdminMenuFragment.AdminMenuFragmentInteractionListener,
+        AdminStudentManagementFragment.AdminStudentManagementFragmentInteractionListener {
 
     private String sessionId;
     public static final String SESSION_PREFERENCES = "SESSION_PREFERENCES";
@@ -43,16 +48,6 @@ public class MainActivity extends AppCompatActivity
             setContentView(R.layout.activity_main);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-
-/*            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.setDrawerListener(toggle);
-            toggle.syncState();
-
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);*/
-
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.main_container,
                     new LoginFragment(),
@@ -99,31 +94,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-/*    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }*/
-
     @Override
     public void loginFragmentInteraction(String theFragString) {
         switch (theFragString) {
@@ -135,17 +105,13 @@ public class MainActivity extends AppCompatActivity
 
                 SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
                 String is_admin = sharedPref.getString("is_admin", "null");
-                //Log.e("InMainActivity", is_admin);
                 
                 if (Integer.parseInt(is_admin) == 1) {
-                    switchFrag(new SearchFragmentAdmin(), theFragString);
+                    switchFrag(new AdminMenuFragment(), AdminMenuFragment.class.getName());
                 } else if (Integer.parseInt(is_admin) == 0) {
                     switchFrag(new SearchFragment(), theFragString);
                 }
                 toggleMenuItem(R.id.action_settings, true);
-
-                //switchFrag(new SearchFragment(), theFragString);
-                //switchFrag(new SearchFragmentAdmin(), theFragString);
                 break;
         }
     }
@@ -206,8 +172,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onProfessorDelete(String theFragString) {
+    public void onInstructorDelete(String instructorEmail) {
+        new DeleteInstructorTask(getApplicationContext(), new API.Listener() {
+            @Override
+            public void onComplete(Object results) {
+                Toast.makeText(getApplicationContext(), "Deleted instructor.", Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onError() {
+                Toast.makeText(getApplicationContext(), "Failed to delete instructor.", Toast.LENGTH_SHORT).show();
+            }
+        }).delete(instructorEmail);
     }
 
     @Override
@@ -237,8 +213,33 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public void onCreateInstructor(Instructor instructor) {
+        new CreateInstructorTask(getApplicationContext(), new API.Listener() {
+            @Override
+            public void onComplete(Object results) {
+                Toast.makeText(getApplicationContext(), "Instructor created.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(getApplicationContext(), "Failed to create instructor.", Toast.LENGTH_SHORT).show();
+            }
+        }).create(instructor);
+    }
+
     private void toggleMenuItem(int theOption, boolean theSwitch) {
         mMenu.findItem(theOption).setEnabled(theSwitch);
     }
 
+    @Override
+    public void onAdminMenuItemSelected(Class<? extends Fragment> selectedFragment) {
+        try {
+            switchFrag(selectedFragment.newInstance(), selectedFragment.getName());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 }

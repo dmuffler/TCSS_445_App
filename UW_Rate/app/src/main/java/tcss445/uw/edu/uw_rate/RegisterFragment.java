@@ -2,6 +2,7 @@ package tcss445.uw.edu.uw_rate;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,7 +20,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.channels.FileChannel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,9 +55,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_register, container, false);
 
-        mFirstName = (EditText) v.findViewById(R.id.firstNameField);
-        mLastName = (EditText) v.findViewById(R.id.lastNameField);
-        mUsername = (EditText) v.findViewById(R.id.emailField);
+        mFirstName = (EditText) v.findViewById(R.id.instructorEmail);
+        mLastName = (EditText) v.findViewById(R.id.instructorFirstName);
+        mUsername = (EditText) v.findViewById(R.id.instructorGender);
         mPassword = (EditText) v.findViewById(R.id.passwordRegField);
         mStudentRadio = (RadioButton) v.findViewById(R.id.studentRadioRegisterButton);
         mAdminRadio = (RadioButton) v.findViewById(R.id.adminRadioRegisterButton);
@@ -140,15 +140,23 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             String response = "";
             HttpURLConnection urlConnection = null;
             String url = API.PATH;
-            String control = "?my_control=" + strings[0];
-            String email = "&my_email=" + strings[1];
-            String password = "&my_pass=" + strings[2];
-            String first_name = "&my_first_name=" + strings[3];
-            String last_name = "&my_last_name=" + strings[4];
+            String control = strings[0];
+            String email = strings[1];
+            String password = strings[2];
+            String first_name = strings[3];
+            String last_name = strings[4];
 
             try {
-                URL urlObject = new URL(url + FILE + control + email + password + first_name +
-                        last_name);
+                Uri uri = Uri.parse(url + FILE)
+                        .buildUpon()
+                        .appendQueryParameter("my_control", control)
+                        .appendQueryParameter("my_email", email)
+                        .appendQueryParameter("my_pass", password)
+                        .appendQueryParameter("my_first_name", first_name)
+                        .appendQueryParameter("my_last_name", last_name)
+                        .build();
+                URL urlObject = new URL(uri.toString());
+                Log.d("URL:", urlObject.toString());
                 urlConnection = (HttpURLConnection) urlObject.openConnection();
 
                 InputStream content = urlConnection.getInputStream();

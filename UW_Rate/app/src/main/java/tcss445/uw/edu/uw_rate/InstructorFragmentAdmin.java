@@ -11,16 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -63,9 +58,14 @@ public class InstructorFragmentAdmin extends Fragment {
         final TextView positionTitleLabel = (TextView) view.findViewById(R.id.positionTitle);
         final TextView departmentNameLabel = (TextView) view.findViewById(R.id.departmentName);
 
-        //final EditText editTextReview = (EditText) view.findViewById(R.id.editTextReview);
-        //final RatingBar ratingBar = (RatingBar) view.findViewById(R.id.editRating);
-        Button submitReview = (Button) view.findViewById(R.id.deleteInstructorButton);
+        Button deleteInstructorButton = (Button) view.findViewById(R.id.deleteInstructorButton);
+        deleteInstructorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onInstructorDelete(mInstructor.getEmail());
+            }
+        });
+
         final API.Listener<RatingResult[]> ratingChangedCallback = new API.Listener<RatingResult[]>() {
             @Override
             public void onComplete(RatingResult[] results) {
@@ -78,28 +78,6 @@ public class InstructorFragmentAdmin extends Fragment {
                 Log.d("::onError", "rating changed");
             }
         };
-
-//        View.OnClickListener ratingChangedListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //int ratingScore = Math.round(ratingBar.getRating());
-////                String reviewText = editTextReview.getText().toString();
-////                if (ratingScore <= 0 || ratingScore > 5) {
-////                    Toast.makeText(getContext(), "You must select a rating score.", Toast.LENGTH_SHORT).show();
-////                } else if(reviewText.length() == 0) {
-////                    Toast.makeText(getContext(), "You must write a review.", Toast.LENGTH_SHORT).show();
-////                } else {
-//                    //rating.setScore(ratingScore);
-//                    //rating.setComment(reviewText);
-//                    //mListener.onRatingChanged(rating, ratingChangedCallback);
-//
-//                //}
-//                mListener.onProfessorDelete("SearchFrag");
-//            }
-//        };
-
-        //ratingBar.setOnClickListener(ratingChangedListener);
-        //submitReview.setOnClickListener(ratingChangedListener);
 
         ListView ratingsListView = (ListView) view.findViewById(R.id.instructorReviewList);
         ratingsListView.setAdapter(mRatingListAdapter);
@@ -131,40 +109,6 @@ public class InstructorFragmentAdmin extends Fragment {
         final TextView numRating3 = (TextView) view.findViewById(R.id.numRating3);
         final TextView numRating4 = (TextView) view.findViewById(R.id.numRating4);
         final TextView numRating5 = (TextView) view.findViewById(R.id.numRating5);
-
-
-//        mRatingsChangedListener = new RatingsChangedListener() {
-//            @Override
-//            public void onRatingsChanged(List<Rating> ratings) {
-//                if (ratings != null) {
-//                    mRatings = ratings;
-//                }
-//                if (mRatings != null) {
-//                    mRatingListAdapter.setRatings(mRatings);
-//                }
-//                int totalRatings = 0;
-//                int[] numRatings = new int[5];
-//                int[] ratingRatio = new int[5];
-//                for (Rating rating : ratings) {
-//                    numRatings[rating.getScore() - 1]++;
-//                    totalRatings++;
-//                }
-//                for (int i = 0; i < numRatings.length; i++) {
-//                    ratingRatio[i] = Math.round(100f * numRatings[i] / new Float(totalRatings));
-//                }
-//                ratingProgress1.setProgress(ratingRatio[0]);
-//                ratingProgress2.setProgress(ratingRatio[1]);
-//                ratingProgress3.setProgress(ratingRatio[2]);
-//                ratingProgress4.setProgress(ratingRatio[3]);
-//                ratingProgress5.setProgress(ratingRatio[4]);
-//
-//                numRating1.setText(String.format("%d", numRatings[0]));
-//                numRating2.setText(String.format("%d", numRatings[1]));
-//                numRating3.setText(String.format("%d", numRatings[2]));
-//                numRating4.setText(String.format("%d", numRatings[3]));
-//                numRating5.setText(String.format("%d", numRatings[4]));
-//            }
-//        };
 
         mInstructorChangedListener.onInstructorChanged(instructor);
 
@@ -202,10 +146,7 @@ public class InstructorFragmentAdmin extends Fragment {
     }
 
     public interface InstructorFragmentAdminInteractionListener {
-        void instructorFragmentInteraction(String theFragString);
-        //void onRatingChanged(Rating rating, API.Listener<RatingResult[]> listener);
-        void onProfessorDelete(String theFragString);
-
+        void onInstructorDelete(String instructorEmail);
     }
 
     public interface InstructorChangedListener {
