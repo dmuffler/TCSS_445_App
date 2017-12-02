@@ -103,15 +103,15 @@ class InstructorListAdapter extends BaseAdapter implements Filterable {
                 ArrayList<Instructor> filteredList = new ArrayList<Instructor>();
                 for(Instructor instructor: allItems){
                     boolean matches = instructor.getFullName().toLowerCase().contains(query);
-                    int partialRatio = FuzzySearch.ratio(instructor.getFullName().toLowerCase(), query);
+                    int partialRatio = FuzzySearch.partialRatio(instructor.getFullName().toLowerCase(), query);
                     if(matches || partialRatio > 50) { filteredList.add(instructor); }
                 }
 
                 Collections.sort(filteredList, new Comparator<Instructor>(){
                     public int compare(Instructor obj1, Instructor obj2) {
-                        int partialRatio1 = FuzzySearch.ratio(obj1.getFullName().toLowerCase(), query);
-                        int partialRatio2 = FuzzySearch.ratio(obj2.getFullName().toLowerCase(), query);
-                        return Integer.compare(partialRatio1, partialRatio2);
+                        int partialRatio1 = FuzzySearch.partialRatio(obj1.getFullName().toLowerCase(), query);
+                        int partialRatio2 = FuzzySearch.partialRatio(obj2.getFullName().toLowerCase(), query);
+                        return Integer.compare(partialRatio2, partialRatio1);
                     }
                 });
 
