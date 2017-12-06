@@ -1,5 +1,9 @@
 package tcss445.uw.edu.uw_rate;
 
+/*
+ * UW Rate app which gives UW students the ability to rate professors at UW.
+ */
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -24,6 +28,13 @@ import tcss445.uw.edu.uw_rate.API.API;
 import tcss445.uw.edu.uw_rate.API.CreateInstructorTask;
 import tcss445.uw.edu.uw_rate.API.DeleteInstructorTask;
 
+/**
+ * @author Steven Smith
+ * @author Donald Muffler
+ * @author Dmitriy Bliznyuk
+ * @author Brian Geving
+ * Main activity deals with fragment transactions.
+ */
 public class MainActivity extends AppCompatActivity
         implements /*NavigationView.OnNavigationItemSelectedListener,*/
         LoginFragment.LoginFragmentInteractionListener,
